@@ -11,18 +11,19 @@ void inicializa_ncurses(){
     //cores??
 }
 
-//criar funcao de imprimir mapa, de inicializar o chapeiro, de game over, animacao inicial.
+//criar funcao de imprimir mapa, de inicializar os elementos do mapa, de game over, animacao inicial, e adaptar as de movimento
 
 void regras(){
     char a;
     a = '.';
     while (a != ' '){
         printw("Bem vindo ao jogo De-Burguer!\n");
+	//completar
     }
 }
 
 void pontuacao(int pontos){
-    //escolher onde vai ficar e as cores (delcara elas com attron)
+    //escolher onde vai ficar e as cores (declara elas com attron)
     printw("PONTOS: %d", pontos);
 }
 
