@@ -3,6 +3,12 @@
 #include <string.h>
 #include "de-burguer.h"
 
+void inicializa_fila(struct pedido* comeco, struct pedido* fim, int* num_clientes){
+	insere_fim(comeco, fim, num_clientes);
+	insere_fim(comeco, fim, num_clientes);
+	insere_fim(comeco, fim, num_clientes);
+}
+
 int fila_vazia(struct pedido* comeco, struct pedido* fim){
 	if ((comeco == NULL) && (fim == NULL)){
 		printf("Não há elementos na lista.\n");
@@ -12,7 +18,7 @@ int fila_vazia(struct pedido* comeco, struct pedido* fim){
 	return 0;
 }
 
-struct pedido* cria_pedido(int* num_clientes){ //aleatorizar de 0 ate 5
+struct pedido* cria_pedido(int* num_clientes){
 	struct pedido* novo;
 	novo->prox = NULL;
 	novo->anterior = NULL;
