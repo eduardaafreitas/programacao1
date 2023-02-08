@@ -11,7 +11,7 @@ void inicializa_ncurses(){
     //cores??
 }
 
-//criar funcao de imprimir mapa, de inicializar os elementos do mapa, de game over, animacao inicial, e adaptar as de movimento
+//criar funcao de imprimir mapa, de inicializar os elementos do mapa, de game over, animacao inicial. determinar o numero max de clientes.
 
 void regras(){
     char a;

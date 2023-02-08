@@ -42,17 +42,13 @@ char* cardapio[] = {  //define as refeicoes que serao util para checar o lanche 
 	[Vegano] = "SFR";
 };
 
-void inicializa_fila();
-
 int fila_vazia(struct pedido* comeco, struct pedido* fim);
 
-struct pedido* cria_pedido();
+struct pedido* cria_pedido(int* num_clientes);
 
-void insere_fim(struct pedido* comeco, struct pedido* fim);
+void insere_fim(struct pedido* comeco, struct pedido* fim, int* num_clientes);
 
 void retira_comeco(struct pedido* comeco);
-
-void inicializa_preparo();
 
 struct refeicao* novo_ingrediente(char ingrediente);
 
@@ -68,4 +64,10 @@ int verifica_pedido(struct refeicao* topo, struct pedido* comeco);
 
 int imprime_pedidos(struct pedido* comeco);
 
-int move_direita(struct refeicao* topo, struct refeicao* comeco, int* pontos, int* erros, struct locais* elementos_mapa);
+int move_direita(struct refeicao* topo, struct refeicao* comeco, int* pontos, int* pedidos_errados, int* uso_lixeira, struct locais* elementos_mapa);
+
+int move_esquerda(struct refeicao* topo, struct refeicao* comeco, int* pontos, int* pedidos_errados, int* uso_lixeira, struct locais* elementos_mapa);
+
+int move_baixo(struct refeicao* topo, struct refeicao* comeco, int* pontos, int* pedidos_errados, int* uso_lixeira, struct locais* elementos_mapa);
+
+int move_cima(struct refeicao* topo, struct refeicao* comeco, int* pontos, int* pedidos_errados, int* uso_lixeira, struct locais* elementos_mapa);

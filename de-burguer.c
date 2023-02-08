@@ -3,11 +3,6 @@
 #include <string.h>
 #include "de-burguer.h"
 
-void inicializa_fila(){
-	struct pedido* comeco = NULL;
-	struct pedido* fim = NULL;
-}
-
 int fila_vazia(struct pedido* comeco, struct pedido* fim){
 	if ((comeco == NULL) && (fim == NULL)){
 		printf("Não há elementos na lista.\n");
@@ -17,19 +12,18 @@ int fila_vazia(struct pedido* comeco, struct pedido* fim){
 	return 0;
 }
 
-struct pedido* cria_pedido(){
+struct pedido* cria_pedido(int* num_clientes){ //aleatorizar de 0 ate 5
 	struct pedido* novo;
 	novo->prox = NULL;
 	novo->anterior = NULL;
-	
-	printf("Informe o valor do novo elemento");
-	scanf("%d", novo->cliente);
+	novo->cliente = (num_clientes++);
+	novo->num_refeicao = rand()%6;
 
 	return novo;
 }
 
-void insere_fim(struct pedido* comeco, struct pedido* fim){
-	struct pedido* novo = create_node();
+void insere_fim(struct pedido* comeco, struct pedido* fim, int* num_clientes){
+	struct pedido* novo = cria_pedido(num_clientes);
 
 	if (fila_vazia(comeco, fim) == 1){
 		comeco = novo;
@@ -50,10 +44,6 @@ void retira_comeco(struct pedido* comeco){
 	comeco = comeco->anterior;
 
 	free(aux);
-}
-
-void inicializa_preparo(){
-	struct refeicao* topo = NULL;
 }
 
 struct refeicao* novo_ingrediente(char ingrediente){
@@ -126,10 +116,8 @@ int imprime_pedidos(struct pedido* comeco){ //imprime os cinco primeiros pedidos
 	}
 }
 
-int move_direita(struct refeicao* topo, struct refeicao* comeco, int* pontos, int* erros, struct locais* elementos_mapa){
-//verifica se esta tentando "subir" em uma estacao, se sim, faz o que ela pede e retorna o inteiro 1, se nao retorna 0
-
-//VER COMO FAZER COM AS PAREDES LATERAIS
+int move_direita(struct refeicao* topo, struct refeicao* comeco, int* pontos, int* pedidos_errados, int* uso_lixeira, struct locais* elementos_mapa){
+//verifica se o personagem esta tentando "subir" em uma estacao, se sim, faz o que ela pede e retorna o inteiro 1, se nao retorna 0
 
 	if ((elementos_mapa->chapeiro.lin == elementos_mapa->hamburguer.lin) && (elementos_mapa->chapeiro.col + 1 == elementos_mapa->hamburguer.col)){
 		push(topo, elementos_mapa->hamburguer.ingrediente);
@@ -160,7 +148,7 @@ int move_direita(struct refeicao* topo, struct refeicao* comeco, int* pontos, in
 		return 1;
 
 	} else if ((elementos_mapa->chapeiro.lin == elementos_mapa->lixeira.lin) && (elementos_mapa->chapeiro.col + 1 == elementos_mapa->lixeira.col)){
-		erros++;
+		uso_lixeira++;
 		pop(topo);
 		return 1;
 
@@ -168,11 +156,173 @@ int move_direita(struct refeicao* topo, struct refeicao* comeco, int* pontos, in
 		if (verifica_pedido(topo, comeco) == 1){
 				pontos += 10;
 		} else {
-			erros++;
+			pedidos_errados++;
 		}
 
 		destroi_refeicao(topo);
 		return 1;
+	
+	} else if (elementos_mapa->chapeiro.col + 1 >= elementos_mapa->parede_lateral.col){  
+		return 1; //se for tentar andar para a direita do limite maximo das colunas do mapa, a parede lateral
+	}
+
+	return 0;
+}
+
+int move_esquerda(struct refeicao* topo, struct refeicao* comeco, int* pontos, int* pedidos_errados, int* uso_lixeira, struct locais* elementos_mapa){
+//verifica se o personagem esta tentando "subir" em uma estacao, se sim, faz o que ela pede e retorna o inteiro 1, se nao retorna 0
+
+	if ((elementos_mapa->chapeiro.lin == elementos_mapa->hamburguer.lin) && (elementos_mapa->chapeiro.col - 1 == elementos_mapa->hamburguer.col)){
+		push(topo, elementos_mapa->hamburguer.ingrediente);
+		return 1;
+
+	} else if ((elementos_mapa->chapeiro.lin == elementos_mapa->pao_cima.lin) && (elementos_mapa->chapeiro.col - 1 == elementos_mapa->pao_cima.col)){
+		push(topo, elementos_mapa->pao_cima.ingrediente);
+		return 1;
+
+	} else if ((elementos_mapa->chapeiro.lin == elementos_mapa->pao_baixo.lin) && (elementos_mapa->chapeiro.col - 1 == elementos_mapa->pao_baixo.col)){
+		push(topo, elementos_mapa->pao_baixo.ingrediente);
+		return 1;
+
+	} else if ((elementos_mapa->chapeiro.lin == elementos_mapa->queijo.lin) && (elementos_mapa->chapeiro.col - 1 == elementos_mapa->queijo.col)){
+		push(topo, elementos_mapa->queijo.ingrediente);
+		return 1;
+
+	} else if ((elementos_mapa->chapeiro.lin == elementos_mapa->salada.lin) && (elementos_mapa->chapeiro.col - 1 == elementos_mapa->salada.col)){
+		push(topo, elementos_mapa->salada.ingrediente);
+		return 1;
+
+	} else if ((elementos_mapa->chapeiro.lin == elementos_mapa->fritas.lin) && (elementos_mapa->chapeiro.col - 1 == elementos_mapa->fritas.col)){
+		push(topo, elementos_mapa->fritas.ingrediente);
+		return 1;
+
+	} else if ((elementos_mapa->chapeiro.lin == elementos_mapa->refrigerante.lin) && (elementos_mapa->chapeiro.col - 1 == elementos_mapa->refrigerante.col)){
+		push(topo, elementos_mapa->refrigerante.ingrediente);
+		return 1;
+
+	} else if ((elementos_mapa->chapeiro.lin == elementos_mapa->lixeira.lin) && (elementos_mapa->chapeiro.col - 1 == elementos_mapa->lixeira.col)){
+		uso_lixeira++;
+		pop(topo);
+		return 1;
+
+	} else if ((elementos_mapa->chapeiro.lin == elementos_mapa->entrega.lin) && (elementos_mapa->chapeiro.col - 1 == elementos_mapa->entrega.col)){
+		if (verifica_pedido(topo, comeco) == 1){
+				pontos += 10;
+		} else {
+			pedidos_errados++;
+		}
+
+		destroi_refeicao(topo);
+		return 1;
+	
+	} else if (elementos_mapa->chapeiro.col - 1 <= 0){  
+		return 1; //se for tentar andar para a direita do limite maximo das colunas do mapa, a parede lateral que fica na coluna 0
+	}
+
+	return 0;
+}
+
+int move_baixo(struct refeicao* topo, struct refeicao* comeco, int* pontos, int* pedidos_errados, int* uso_lixeira, struct locais* elementos_mapa){
+//verifica se o personagem esta tentando "subir" em uma estacao, se sim, faz o que ela pede e retorna o inteiro 1, se nao retorna 0
+
+	if ((elementos_mapa->chapeiro.lin + 1 == elementos_mapa->hamburguer.lin) && (elementos_mapa->chapeiro.col == elementos_mapa->hamburguer.col)){
+		push(topo, elementos_mapa->hamburguer.ingrediente);
+		return 1;
+
+	} else if ((elementos_mapa->chapeiro.lin + 1 == elementos_mapa->pao_cima.lin) && (elementos_mapa->chapeiro.col == elementos_mapa->pao_cima.col)){
+		push(topo, elementos_mapa->pao_cima.ingrediente);
+		return 1;
+
+	} else if ((elementos_mapa->chapeiro.lin + 1  == elementos_mapa->pao_baixo.lin) && (elementos_mapa->chapeiro.col == elementos_mapa->pao_baixo.col)){
+		push(topo, elementos_mapa->pao_baixo.ingrediente);
+		return 1;
+
+	} else if ((elementos_mapa->chapeiro.lin + 1 == elementos_mapa->queijo.lin) && (elementos_mapa->chapeiro.col == elementos_mapa->queijo.col)){
+		push(topo, elementos_mapa->queijo.ingrediente);
+		return 1;
+
+	} else if ((elementos_mapa->chapeiro.lin + 1 == elementos_mapa->salada.lin) && (elementos_mapa->chapeiro.col == elementos_mapa->salada.col)){
+		push(topo, elementos_mapa->salada.ingrediente);
+		return 1;
+
+	} else if ((elementos_mapa->chapeiro.lin + 1 == elementos_mapa->fritas.lin) && (elementos_mapa->chapeiro.col = elementos_mapa->fritas.col)){
+		push(topo, elementos_mapa->fritas.ingrediente);
+		return 1;
+
+	} else if ((elementos_mapa->chapeiro.lin + 1 == elementos_mapa->refrigerante.lin) && (elementos_mapa->chapeiro.col == elementos_mapa->refrigerante.col)){
+		push(topo, elementos_mapa->refrigerante.ingrediente);
+		return 1;
+
+	} else if ((elementos_mapa->chapeiro.lin + 1 == elementos_mapa->lixeira.lin) && (elementos_mapa->chapeiro.col == elementos_mapa->lixeira.col)){
+		uso_lixeira++;
+		pop(topo);
+		return 1;
+
+	} else if ((elementos_mapa->chapeiro.lin + 1 == elementos_mapa->entrega.lin) && (elementos_mapa->chapeiro.col == elementos_mapa->entrega.col)){
+		if (verifica_pedido(topo, comeco) == 1){
+				pontos += 10;
+		} else {
+			pedidos_errados++;
+		}
+
+		destroi_refeicao(topo);
+		return 1;
+	
+	} else if (elementos_mapa->chapeiro.lin + 1 >= elementos_mapa->parede_horizontal.lin){  
+		return 1; //se for tentar andar para abaixo do limite maximo das linhas do mapa, a parede horizontal
+	}
+
+	return 0;
+}
+
+int move_cima(struct refeicao* topo, struct refeicao* comeco, int* pontos, int* pedidos_errados, int* uso_lixeira, struct locais* elementos_mapa){
+//verifica se o personagem esta tentando "subir" em uma estacao, se sim, faz o que ela pede e retorna o inteiro 1, se nao retorna 0
+
+	if ((elementos_mapa->chapeiro.lin - 1 == elementos_mapa->hamburguer.lin) && (elementos_mapa->chapeiro.col == elementos_mapa->hamburguer.col)){
+		push(topo, elementos_mapa->hamburguer.ingrediente);
+		return 1;
+
+	} else if ((elementos_mapa->chapeiro.lin - 1 == elementos_mapa->pao_cima.lin) && (elementos_mapa->chapeiro.col == elementos_mapa->pao_cima.col)){
+		push(topo, elementos_mapa->pao_cima.ingrediente);
+		return 1;
+
+	} else if ((elementos_mapa->chapeiro.lin - 1 == elementos_mapa->pao_baixo.lin) && (elementos_mapa->chapeiro.col == elementos_mapa->pao_baixo.col)){
+		push(topo, elementos_mapa->pao_baixo.ingrediente);
+		return 1;
+
+	} else if ((elementos_mapa->chapeiro.lin - 1 == elementos_mapa->queijo.lin) && (elementos_mapa->chapeiro.col == elementos_mapa->queijo.col)){
+		push(topo, elementos_mapa->queijo.ingrediente);
+		return 1;
+
+	} else if ((elementos_mapa->chapeiro.lin - 1 == elementos_mapa->salada.lin) && (elementos_mapa->chapeiro.col == elementos_mapa->salada.col)){
+		push(topo, elementos_mapa->salada.ingrediente);
+		return 1;
+
+	} else if ((elementos_mapa->chapeiro.lin - 1 == elementos_mapa->fritas.lin) && (elementos_mapa->chapeiro.col == elementos_mapa->fritas.col)){
+		push(topo, elementos_mapa->fritas.ingrediente);
+		return 1;
+
+	} else if ((elementos_mapa->chapeiro.lin - 1 == elementos_mapa->refrigerante.lin) && (elementos_mapa->chapeiro.col == elementos_mapa->refrigerante.col)){
+		push(topo, elementos_mapa->refrigerante.ingrediente);
+		return 1;
+
+	} else if ((elementos_mapa->chapeiro.lin - 1 == elementos_mapa->lixeira.lin) && (elementos_mapa->chapeiro.col == elementos_mapa->lixeira.col)){
+		uso_lixeira++;
+		pop(topo);
+		return 1;
+
+	} else if ((elementos_mapa->chapeiro.lin - 1 == elementos_mapa->entrega.lin) && (elementos_mapa->chapeiro.col == elementos_mapa->entrega.col)){
+		if (verifica_pedido(topo, comeco) == 1){
+				pontos += 10;
+		} else {
+			pedidos_errados++;
+		}
+
+		destroi_refeicao(topo);
+		return 1;
+	
+	} else if (elementos_mapa->chapeiro.lin - 1 <= 0){  
+		return 1; //se for tentar andar para acima do limite maximo das linhas do mapa, a parede horizontal que fica na coluna 0
 	}
 
 	return 0;
