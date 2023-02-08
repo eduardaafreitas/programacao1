@@ -314,7 +314,7 @@ int move_cima(struct refeicao* topo, struct refeicao* comeco, int* pontos, int* 
 
 	} else if ((elementos_mapa->chapeiro.lin - 1 == elementos_mapa->lixeira.lin) && (elementos_mapa->chapeiro.col == elementos_mapa->lixeira.col)){
 		uso_lixeira++;
-		pop(topo);
+		destroi_refeicao(topo);
 		return 1;
 
 	} else if ((elementos_mapa->chapeiro.lin - 1 == elementos_mapa->entrega.lin) && (elementos_mapa->chapeiro.col == elementos_mapa->entrega.col)){
