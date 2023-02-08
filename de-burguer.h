@@ -42,6 +42,8 @@ char* cardapio[] = {  //define as refeicoes que serao util para checar o lanche 
 	[Vegano] = "SFR";
 };
 
+void inicializa_fila(struct pedido* comeco, struct pedido* fim, int* num_clientes);
+
 int fila_vazia(struct pedido* comeco, struct pedido* fim);
 
 struct pedido* cria_pedido(int* num_clientes);
