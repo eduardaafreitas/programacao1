@@ -37,10 +37,14 @@ int main(){
 			} break;
 		}
 		
+		if (pedidos_errados == 3) || (uso_lixeira == 5){
+				game_over();
+		}
+		
 		if ((num_clientes < 7) && (rand()%2 == 1)){
 				insere_fim(comeco, fim, &num_clientes);
 				num_clientes++;
-			}
+		}
 		
 		movimento = getch();
 	}
