@@ -6,7 +6,7 @@
 #define Vegano 5;
 
 struct estacao{
-	char simbolo;
+	char simbolo[3];
 	int lin, col1, col2, col3;
 	char ingrediente;
 };
