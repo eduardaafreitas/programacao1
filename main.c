@@ -41,6 +41,8 @@ int main(){
 				insere_fim(comeco, fim, &num_clientes);
 				num_clientes++;
 			}
+		
+		movimento = getch();
 	}
 	endwin();
 	return 0;
