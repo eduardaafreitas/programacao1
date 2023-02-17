@@ -125,31 +125,45 @@ int imprime_pedidos(struct pedido* comeco){ //imprime os cinco primeiros pedidos
 int move_direita(struct refeicao* topo, struct refeicao* comeco, int* pontos, int* pedidos_errados, int* uso_lixeira, struct locais* elementos_mapa){
 //verifica se o personagem esta tentando "subir" em uma estacao, se sim, faz o que ela pede e retorna o inteiro 1, se nao retorna 0
 
-	if ((elementos_mapa->chapeiro.lin == elementos_mapa->hamburguer.lin) && (elementos_mapa->chapeiro.col + 1 == elementos_mapa->hamburguer.col)){
+	if ((elementos_mapa->chapeiro.lin == elementos_mapa->hamburguer.lin) && ((elementos_mapa->chapeiro.col == elementos_mapa->hamburguer.col1) 
+			|| (elementos_mapa->chapeiro.col == elementos_mapa->hamburguer.col2) || (elementos_mapa->chapeiro.col == elementos_mapa->hamburguer.col3))){
+
 		push(topo, elementos_mapa->hamburguer.ingrediente);
 		return 1;
 
-	} else if ((elementos_mapa->chapeiro.lin == elementos_mapa->pao_cima.lin) && (elementos_mapa->chapeiro.col + 1 == elementos_mapa->pao_cima.col)){
+	} else if ((elementos_mapa->chapeiro.lin == elementos_mapa->pao_cima.lin) && ((elementos_mapa->chapeiro.col == elementos_mapa->pao_cima.col1) 
+			|| (elementos_mapa->chapeiro.col == elementos_mapa->pao_cima.col2) || (elementos_mapa->chapeiro.col == elementos_mapa->pao_cima.col3))){
+
 		push(topo, elementos_mapa->pao_cima.ingrediente);
 		return 1;
 
-	} else if ((elementos_mapa->chapeiro.lin == elementos_mapa->pao_baixo.lin) && (elementos_mapa->chapeiro.col + 1 == elementos_mapa->pao_baixo.col)){
+	} else if ((elementos_mapa->chapeiro.lin == elementos_mapa->pao_baixo.lin) && ((elementos_mapa->chapeiro.col == elementos_mapa->pao_baixo.col1) 
+			|| (elementos_mapa->chapeiro.col == elementos_mapa->pao_baixo.col2) || (elementos_mapa->chapeiro.col == elementos_mapa->pao_baixo.col3))){
+
 		push(topo, elementos_mapa->pao_baixo.ingrediente);
 		return 1;
 
-	} else if ((elementos_mapa->chapeiro.lin == elementos_mapa->queijo.lin) && (elementos_mapa->chapeiro.col + 1 == elementos_mapa->queijo.col)){
+	} else if ((elementos_mapa->chapeiro.lin == elementos_mapa->queijo.lin) && ((elementos_mapa->chapeiro.col == elementos_mapa->queijo.col1) 
+			|| (elementos_mapa->chapeiro.col == elementos_mapa->queijo.col2) || (elementos_mapa->chapeiro.col == elementos_mapa->queijo.col3))){
+
 		push(topo, elementos_mapa->queijo.ingrediente);
 		return 1;
 
-	} else if ((elementos_mapa->chapeiro.lin == elementos_mapa->salada.lin) && (elementos_mapa->chapeiro.col + 1 == elementos_mapa->salada.col)){
+	} else if ((elementos_mapa->chapeiro.lin == elementos_mapa->salada.lin) && ((elementos_mapa->chapeiro.col == elementos_mapa->salada.col1) 
+			|| (elementos_mapa->chapeiro.col == elementos_mapa->salada.col2) || (elementos_mapa->chapeiro.col == elementos_mapa->salada.col3))){
+
 		push(topo, elementos_mapa->salada.ingrediente);
 		return 1;
 
-	} else if ((elementos_mapa->chapeiro.lin == elementos_mapa->fritas.lin) && (elementos_mapa->chapeiro.col + 1 == elementos_mapa->fritas.col)){
+	} else if ((elementos_mapa->chapeiro.lin == elementos_mapa->fritas.lin) && ((elementos_mapa->chapeiro.col == elementos_mapa->fritas.col1) 
+			|| (elementos_mapa->chapeiro.col == elementos_mapa->fritas.col2) || (elementos_mapa->chapeiro.col == elementos_mapa->fritas.col3))){
+
 		push(topo, elementos_mapa->fritas.ingrediente);
 		return 1;
 
-	} else if ((elementos_mapa->chapeiro.lin == elementos_mapa->refrigerante.lin) && (elementos_mapa->chapeiro.col + 1 == elementos_mapa->refrigerante.col)){
+	} else if ((elementos_mapa->chapeiro.lin == elementos_mapa->refrigerante.lin) && ((elementos_mapa->chapeiro.col == elementos_mapa->refrigerante.col1) 
+			|| (elementos_mapa->chapeiro.col == elementos_mapa->refrigerante.col2) || (elementos_mapa->chapeiro.col == elementos_mapa->refrigerante.col3))){
+
 		push(topo, elementos_mapa->refrigerante.ingrediente);
 		return 1;
 
@@ -178,31 +192,45 @@ int move_direita(struct refeicao* topo, struct refeicao* comeco, int* pontos, in
 int move_esquerda(struct refeicao* topo, struct refeicao* comeco, int* pontos, int* pedidos_errados, int* uso_lixeira, struct locais* elementos_mapa){
 //verifica se o personagem esta tentando "subir" em uma estacao, se sim, faz o que ela pede e retorna o inteiro 1, se nao retorna 0
 
-	if ((elementos_mapa->chapeiro.lin == elementos_mapa->hamburguer.lin) && (elementos_mapa->chapeiro.col - 1 == elementos_mapa->hamburguer.col)){
+	if ((elementos_mapa->chapeiro.lin == elementos_mapa->hamburguer.lin) && ((elementos_mapa->chapeiro.col == elementos_mapa->hamburguer.col1) 
+			|| (elementos_mapa->chapeiro.col == elementos_mapa->hamburguer.col2) || (elementos_mapa->chapeiro.col == elementos_mapa->hamburguer.col3))){
+
 		push(topo, elementos_mapa->hamburguer.ingrediente);
 		return 1;
 
-	} else if ((elementos_mapa->chapeiro.lin == elementos_mapa->pao_cima.lin) && (elementos_mapa->chapeiro.col - 1 == elementos_mapa->pao_cima.col)){
+	} else if ((elementos_mapa->chapeiro.lin == elementos_mapa->pao_cima.lin) && ((elementos_mapa->chapeiro.col == elementos_mapa->pao_cima.col1) 
+			|| (elementos_mapa->chapeiro.col == elementos_mapa->pao_cima.col2) || (elementos_mapa->chapeiro.col == elementos_mapa->pao_cima.col3))){
+
 		push(topo, elementos_mapa->pao_cima.ingrediente);
 		return 1;
 
-	} else if ((elementos_mapa->chapeiro.lin == elementos_mapa->pao_baixo.lin) && (elementos_mapa->chapeiro.col - 1 == elementos_mapa->pao_baixo.col)){
+	} else if ((elementos_mapa->chapeiro.lin == elementos_mapa->pao_baixo.lin) && ((elementos_mapa->chapeiro.col == elementos_mapa->pao_baixo.col1) 
+			|| (elementos_mapa->chapeiro.col == elementos_mapa->pao_baixo.col2) || (elementos_mapa->chapeiro.col == elementos_mapa->pao_baixo.col3))){
+
 		push(topo, elementos_mapa->pao_baixo.ingrediente);
 		return 1;
 
-	} else if ((elementos_mapa->chapeiro.lin == elementos_mapa->queijo.lin) && (elementos_mapa->chapeiro.col - 1 == elementos_mapa->queijo.col)){
+	} else if ((elementos_mapa->chapeiro.lin == elementos_mapa->queijo.lin) && ((elementos_mapa->chapeiro.col == elementos_mapa->queijo.col1) 
+			|| (elementos_mapa->chapeiro.col == elementos_mapa->queijo.col2) || (elementos_mapa->chapeiro.col == elementos_mapa->queijo.col3))){
+
 		push(topo, elementos_mapa->queijo.ingrediente);
 		return 1;
 
-	} else if ((elementos_mapa->chapeiro.lin == elementos_mapa->salada.lin) && (elementos_mapa->chapeiro.col - 1 == elementos_mapa->salada.col)){
+	} else if ((elementos_mapa->chapeiro.lin == elementos_mapa->salada.lin) && ((elementos_mapa->chapeiro.col == elementos_mapa->salada.col1) 
+			|| (elementos_mapa->chapeiro.col == elementos_mapa->salada.col2) || (elementos_mapa->chapeiro.col == elementos_mapa->salada.col3))){
+
 		push(topo, elementos_mapa->salada.ingrediente);
 		return 1;
 
-	} else if ((elementos_mapa->chapeiro.lin == elementos_mapa->fritas.lin) && (elementos_mapa->chapeiro.col - 1 == elementos_mapa->fritas.col)){
+	} else if ((elementos_mapa->chapeiro.lin == elementos_mapa->fritas.lin) && ((elementos_mapa->chapeiro.col == elementos_mapa->fritas.col1) 
+			|| (elementos_mapa->chapeiro.col == elementos_mapa->fritas.col2) || (elementos_mapa->chapeiro.col == elementos_mapa->fritas.col3))){
+
 		push(topo, elementos_mapa->fritas.ingrediente);
 		return 1;
 
-	} else if ((elementos_mapa->chapeiro.lin == elementos_mapa->refrigerante.lin) && (elementos_mapa->chapeiro.col - 1 == elementos_mapa->refrigerante.col)){
+	} else if ((elementos_mapa->chapeiro.lin == elementos_mapa->refrigerante.lin) && ((elementos_mapa->chapeiro.col == elementos_mapa->refrigerante.col1) 
+			|| (elementos_mapa->chapeiro.col == elementos_mapa->refrigerante.col2) || (elementos_mapa->chapeiro.col == elementos_mapa->refrigerante.col3))){
+
 		push(topo, elementos_mapa->refrigerante.ingrediente);
 		return 1;
 
@@ -231,31 +259,44 @@ int move_esquerda(struct refeicao* topo, struct refeicao* comeco, int* pontos, i
 int move_baixo(struct refeicao* topo, struct refeicao* comeco, int* pontos, int* pedidos_errados, int* uso_lixeira, struct locais* elementos_mapa){
 //verifica se o personagem esta tentando "subir" em uma estacao, se sim, faz o que ela pede e retorna o inteiro 1, se nao retorna 0
 
-	if ((elementos_mapa->chapeiro.lin + 1 == elementos_mapa->hamburguer.lin) && (elementos_mapa->chapeiro.col == elementos_mapa->hamburguer.col)){
+	if ((elementos_mapa->chapeiro.lin + 1 == elementos_mapa->hamburguer.lin) && ((elementos_mapa->chapeiro.col == elementos_mapa->hamburguer.col1) 
+			|| (elementos_mapa->chapeiro.col == elementos_mapa->hamburguer.col2) || (elementos_mapa->chapeiro.col == elementos_mapa->hamburguer.col3))){
+
 		push(topo, elementos_mapa->hamburguer.ingrediente);
 		return 1;
 
-	} else if ((elementos_mapa->chapeiro.lin + 1 == elementos_mapa->pao_cima.lin) && (elementos_mapa->chapeiro.col == elementos_mapa->pao_cima.col)){
+	} else if ((elementos_mapa->chapeiro.lin + 1 == elementos_mapa->pao_cima.lin) && ((elementos_mapa->chapeiro.col == elementos_mapa->pao_cima.col1) 
+			|| (elementos_mapa->chapeiro.col == elementos_mapa->pao_cima.col2) || (elementos_mapa->chapeiro.col == elementos_mapa->pao_cima.col3))){
+
 		push(topo, elementos_mapa->pao_cima.ingrediente);
 		return 1;
 
-	} else if ((elementos_mapa->chapeiro.lin + 1  == elementos_mapa->pao_baixo.lin) && (elementos_mapa->chapeiro.col == elementos_mapa->pao_baixo.col)){
+	} else if ((elementos_mapa->chapeiro.lin + 1  == elementos_mapa->pao_baixo.lin) && ((elementos_mapa->chapeiro.col == elementos_mapa->pao_baixo.col1) 
+			|| (elementos_mapa->chapeiro.col == elementos_mapa->pao_baixo.col2) || (elementos_mapa->chapeiro.col == elementos_mapa->pao_baixo.col3))){
 		push(topo, elementos_mapa->pao_baixo.ingrediente);
 		return 1;
 
-	} else if ((elementos_mapa->chapeiro.lin + 1 == elementos_mapa->queijo.lin) && (elementos_mapa->chapeiro.col == elementos_mapa->queijo.col)){
+	} else if ((elementos_mapa->chapeiro.lin + 1 == elementos_mapa->queijo.lin) && ((elementos_mapa->chapeiro.col == elementos_mapa->queijo.col1) 
+			|| (elementos_mapa->chapeiro.col == elementos_mapa->queijo.col2) || (elementos_mapa->chapeiro.col == elementos_mapa->queijo.col3))){
+
 		push(topo, elementos_mapa->queijo.ingrediente);
 		return 1;
 
-	} else if ((elementos_mapa->chapeiro.lin + 1 == elementos_mapa->salada.lin) && (elementos_mapa->chapeiro.col == elementos_mapa->salada.col)){
+	} else if ((elementos_mapa->chapeiro.lin + 1 == elementos_mapa->salada.lin) && ((elementos_mapa->chapeiro.col == elementos_mapa->salada.col1) 
+			|| (elementos_mapa->chapeiro.col == elementos_mapa->salada.col2) || (elementos_mapa->chapeiro.col == elementos_mapa->salada.col3))){
+
 		push(topo, elementos_mapa->salada.ingrediente);
 		return 1;
 
-	} else if ((elementos_mapa->chapeiro.lin + 1 == elementos_mapa->fritas.lin) && (elementos_mapa->chapeiro.col = elementos_mapa->fritas.col)){
+	} else if ((elementos_mapa->chapeiro.lin + 1 == elementos_mapa->fritas.lin) && ((elementos_mapa->chapeiro.col == elementos_mapa->fritas.col1) 
+			|| (elementos_mapa->chapeiro.col == elementos_mapa->fritas.col2) || (elementos_mapa->chapeiro.col == elementos_mapa->fritas.col3))){
+
 		push(topo, elementos_mapa->fritas.ingrediente);
 		return 1;
 
-	} else if ((elementos_mapa->chapeiro.lin + 1 == elementos_mapa->refrigerante.lin) && (elementos_mapa->chapeiro.col == elementos_mapa->refrigerante.col)){
+	} else if ((elementos_mapa->chapeiro.lin + 1 == elementos_mapa->refrigerante.lin) && ((elementos_mapa->chapeiro.col == elementos_mapa->refrigerante.col1) 
+			|| (elementos_mapa->chapeiro.col == elementos_mapa->refrigerante.col2) || (elementos_mapa->chapeiro.col == elementos_mapa->refrigerante.col3))){
+
 		push(topo, elementos_mapa->refrigerante.ingrediente);
 		return 1;
 
@@ -284,31 +325,45 @@ int move_baixo(struct refeicao* topo, struct refeicao* comeco, int* pontos, int*
 int move_cima(struct refeicao* topo, struct refeicao* comeco, int* pontos, int* pedidos_errados, int* uso_lixeira, struct locais* elementos_mapa){
 //verifica se o personagem esta tentando "subir" em uma estacao, se sim, faz o que ela pede e retorna o inteiro 1, se nao retorna 0
 
-	if ((elementos_mapa->chapeiro.lin - 1 == elementos_mapa->hamburguer.lin) && (elementos_mapa->chapeiro.col == elementos_mapa->hamburguer.col)){
+	if ((elementos_mapa->chapeiro.lin - 1 == elementos_mapa->hamburguer.lin) && ((elementos_mapa->chapeiro.col == elementos_mapa->hamburguer.col1) 
+			|| (elementos_mapa->chapeiro.col == elementos_mapa->hamburguer.col2) || (elementos_mapa->chapeiro.col == elementos_mapa->hamburguer.col3))){
+
 		push(topo, elementos_mapa->hamburguer.ingrediente);
 		return 1;
 
-	} else if ((elementos_mapa->chapeiro.lin - 1 == elementos_mapa->pao_cima.lin) && (elementos_mapa->chapeiro.col == elementos_mapa->pao_cima.col)){
+	} else if ((elementos_mapa->chapeiro.lin - 1 == elementos_mapa->pao_cima.lin) && ((elementos_mapa->chapeiro.col == elementos_mapa->pao_cima.col1) 
+			|| (elementos_mapa->chapeiro.col == elementos_mapa->pao_cima.col2) || (elementos_mapa->chapeiro.col == elementos_mapa->pao_cima.col3))){
+
 		push(topo, elementos_mapa->pao_cima.ingrediente);
 		return 1;
 
-	} else if ((elementos_mapa->chapeiro.lin - 1 == elementos_mapa->pao_baixo.lin) && (elementos_mapa->chapeiro.col == elementos_mapa->pao_baixo.col)){
+	} else if ((elementos_mapa->chapeiro.lin - 1 == elementos_mapa->pao_baixo.lin) && ((elementos_mapa->chapeiro.col == elementos_mapa->pao_baixo.col1) 
+			|| (elementos_mapa->chapeiro.col == elementos_mapa->pao_baixo.col2) || (elementos_mapa->chapeiro.col == elementos_mapa->pao_baixo.col3))){
+
 		push(topo, elementos_mapa->pao_baixo.ingrediente);
 		return 1;
 
-	} else if ((elementos_mapa->chapeiro.lin - 1 == elementos_mapa->queijo.lin) && (elementos_mapa->chapeiro.col == elementos_mapa->queijo.col)){
+	} else if ((elementos_mapa->chapeiro.lin - 1 == elementos_mapa->queijo.lin) && ((elementos_mapa->chapeiro.col == elementos_mapa->queijo.col1) 
+			|| (elementos_mapa->chapeiro.col == elementos_mapa->queijo.col2) || (elementos_mapa->chapeiro.col == elementos_mapa->queijo.col3))){
+
 		push(topo, elementos_mapa->queijo.ingrediente);
 		return 1;
 
-	} else if ((elementos_mapa->chapeiro.lin - 1 == elementos_mapa->salada.lin) && (elementos_mapa->chapeiro.col == elementos_mapa->salada.col)){
+	} else if ((elementos_mapa->chapeiro.lin - 1 == elementos_mapa->salada.lin) && ((elementos_mapa->chapeiro.col == elementos_mapa->salada.col1) 
+			|| (elementos_mapa->chapeiro.col == elementos_mapa->salada.col2) || (elementos_mapa->chapeiro.col == elementos_mapa->salada.col3))){
+
 		push(topo, elementos_mapa->salada.ingrediente);
 		return 1;
 
-	} else if ((elementos_mapa->chapeiro.lin - 1 == elementos_mapa->fritas.lin) && (elementos_mapa->chapeiro.col == elementos_mapa->fritas.col)){
+	} else if ((elementos_mapa->chapeiro.lin - 1 == elementos_mapa->fritas.lin) && ((elementos_mapa->chapeiro.col == elementos_mapa->fritas.col1) 
+			|| (elementos_mapa->chapeiro.col == elementos_mapa->fritas.col2) || (elementos_mapa->chapeiro.col == elementos_mapa->fritas.col3))){
+
 		push(topo, elementos_mapa->fritas.ingrediente);
 		return 1;
 
-	} else if ((elementos_mapa->chapeiro.lin - 1 == elementos_mapa->refrigerante.lin) && (elementos_mapa->chapeiro.col == elementos_mapa->refrigerante.col)){
+	} else if ((elementos_mapa->chapeiro.lin - 1 == elementos_mapa->refrigerante.lin) && ((elementos_mapa->chapeiro.col == elementos_mapa->refrigerante.col1) 
+			|| (elementos_mapa->chapeiro.col == elementos_mapa->refrigerante.col2) || (elementos_mapa->chapeiro.col == elementos_mapa->refrigerante.col3))){
+
 		push(topo, elementos_mapa->refrigerante.ingrediente);
 		return 1;
 
