@@ -7,7 +7,7 @@
 
 struct estacao{
 	char simbolo;
-	int lin, col;
+	int lin, col1, col2, col3;
 	char ingrediente;
 };
 
