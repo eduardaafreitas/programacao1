@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ncurses.h>
 #include "de-burguer.h"
 
 void inicializa_fila(struct pedido* comeco, struct pedido* fim, int* num_clientes){
@@ -23,7 +24,7 @@ struct pedido* cria_pedido(int* num_clientes){
 	struct pedido* novo;
 	novo->prox = NULL;
 	novo->anterior = NULL;
-	novo->cliente = (num_clientes++);
+	novo->cliente = (*num_clientes++);
 	novo->num_refeicao = rand()%6;
 
 	return novo;
@@ -100,7 +101,7 @@ int verifica_pedido(struct refeicao* topo, struct pedido* comeco){
 	return 0;
 }
 
-int verifica_direita(struct refeicao* topo, struct refeicao* comeco, int* pontos, int* pedidos_errados, int* uso_lixeira, struct locais* elementos_mapa){
+int verifica_direita(struct refeicao* topo, struct pedido* comeco, int* pontos, int* pedidos_errados, int* uso_lixeira, struct locais* elementos_mapa){
 //verifica se o personagem esta tentando "subir" em uma estacao, se sim, faz o que ela pede e retorna o inteiro 1, se nao retorna 0
 
 	if ((elementos_mapa->chapeiro.lin == elementos_mapa->hamburguer.lin) && ((elementos_mapa->chapeiro.col == elementos_mapa->hamburguer.col[1]) 
@@ -167,7 +168,7 @@ int verifica_direita(struct refeicao* topo, struct refeicao* comeco, int* pontos
 	return 0;
 }
 
-int verifica_esquerda(struct refeicao* topo, struct refeicao* comeco, int* pontos, int* pedidos_errados, int* uso_lixeira, struct locais* elementos_mapa){
+int verifica_esquerda(struct refeicao* topo, struct pedido* comeco, int* pontos, int* pedidos_errados, int* uso_lixeira, struct locais* elementos_mapa){
 //verifica se o personagem esta tentando "subir" em uma estacao, se sim, faz o que ela pede e retorna o inteiro 1, se nao retorna 0
 
 	if ((elementos_mapa->chapeiro.lin == elementos_mapa->hamburguer.lin) && ((elementos_mapa->chapeiro.col == elementos_mapa->hamburguer.col[1]) 
@@ -234,7 +235,7 @@ int verifica_esquerda(struct refeicao* topo, struct refeicao* comeco, int* ponto
 	return 0;
 }
 
-int verifica_baixo(struct refeicao* topo, struct refeicao* comeco, int* pontos, int* pedidos_errados, int* uso_lixeira, struct locais* elementos_mapa){
+int verifica_baixo(struct refeicao* topo, struct pedido* comeco, int* pontos, int* pedidos_errados, int* uso_lixeira, struct locais* elementos_mapa){
 //verifica se o personagem esta tentando "subir" em uma estacao, se sim, faz o que ela pede e retorna o inteiro 1, se nao retorna 0
 
 	if ((elementos_mapa->chapeiro.lin + 1 == elementos_mapa->hamburguer.lin) && ((elementos_mapa->chapeiro.col == elementos_mapa->hamburguer.col[1]) 
@@ -300,7 +301,7 @@ int verifica_baixo(struct refeicao* topo, struct refeicao* comeco, int* pontos, 
 	return 0;
 }
 
-int verifica_cima(struct refeicao* topo, struct refeicao* comeco, int* pontos, int* pedidos_errados, int* uso_lixeira, struct locais* elementos_mapa){
+int verifica_cima(struct refeicao* topo, struct pedido* comeco, int* pontos, int* pedidos_errados, int* uso_lixeira, struct locais* elementos_mapa){
 //verifica se o personagem esta tentando "subir" em uma estacao, se sim, faz o que ela pede e retorna o inteiro 1, se nao retorna 0
 
 	if ((elementos_mapa->chapeiro.lin - 1 == elementos_mapa->hamburguer.lin) && ((elementos_mapa->chapeiro.col == elementos_mapa->hamburguer.col[1]) 
@@ -459,7 +460,7 @@ void inicializa_elem_mapa(struct locais* elementos_mapa){
 	elementos_mapa->parede_direita.simbolo = '|';
 
 	elementos_mapa->parede_baixo.lin = 8;
-	elementos_mapa->parede_baixo.simbolo = '—';
+	elementos_mapa->parede_baixo.simbolo = '-';
 }
 
 void imprime_mapa(){
@@ -476,12 +477,12 @@ void imprime_mapa(){
 
 	//imprime parede baixo
 	for (i = 0; i <= 26; i++){
-		mvprintw(8, i, "—");
+		mvprintw(8, i, "-");
 	}
 
 	//imprime parede cima
 	for (i = 0; i <= 26; i++){
-		mvprintw(0, i, "—");
+		mvprintw(0, i, "-");
 	}
 
 	//elementos do mapa

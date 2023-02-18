@@ -1,9 +1,9 @@
-#define X_Burguer 0;
-#define X_Salada 1;
-#define Combo_1 2;
-#define Combo_2 3;
-#define Vegetariano 4;
-#define Vegano 5;
+#define X_Burguer 0
+#define X_Salada 1
+#define Combo_1 2
+#define Combo_2 3
+#define Vegetariano 4
+#define Vegano 5
 
 struct estacao{
 	char simbolo[3];
@@ -34,12 +34,12 @@ struct refeicao{
 };
 
 char* cardapio[] = {  //define as refeicoes que serao util para checar o lanche e imprimi-lo na tela 
-	[X_Burguer] = "pHQP";
-	[X_Salada] = "pHSP";
-	[Combo_1] = "pHQPFR";
-	[Combo_2] = "pHSPFR";
-	[Vegetariano] = "pQPFR";
-	[Vegano] = "SFR";
+	[X_Burguer] = "pHQP",
+	[X_Salada] = "pHSP",
+	[Combo_1] = "pHQPFR",
+	[Combo_2] = "pHSPFR",
+	[Vegetariano] = "pQPFR",
+	[Vegano] = "SFR"
 };
 
 void inicializa_fila(struct pedido* comeco, struct pedido* fim, int* num_clientes);
@@ -62,13 +62,13 @@ void destroi_refeicao(struct refeicao* topo);
 
 int verifica_pedido(struct refeicao* topo, struct pedido* comeco);
 
-int verifica_direita(struct refeicao* topo, struct refeicao* comeco, int* pontos, int* pedidos_errados, int* uso_lixeira, struct locais* elementos_mapa);
+int verifica_direita(struct refeicao* topo, struct pedido* comeco, int* pontos, int* pedidos_errados, int* uso_lixeira, struct locais* elementos_mapa);
 
-int verifica_esquerda(struct refeicao* topo, struct refeicao* comeco, int* pontos, int* pedidos_errados, int* uso_lixeira, struct locais* elementos_mapa);
+int verifica_esquerda(struct refeicao* topo, struct pedido* comeco, int* pontos, int* pedidos_errados, int* uso_lixeira, struct locais* elementos_mapa);
 
-int verifica_baixo(struct refeicao* topo, struct refeicao* comeco, int* pontos, int* pedidos_errados, int* uso_lixeira, struct locais* elementos_mapa);
+int verifica_baixo(struct refeicao* topo, struct pedido* comeco, int* pontos, int* pedidos_errados, int* uso_lixeira, struct locais* elementos_mapa);
 
-int verifica_cima(struct refeicao* topo, struct refeicao* comeco, int* pontos, int* pedidos_errados, int* uso_lixeira, struct locais* elementos_mapa);
+int verifica_cima(struct refeicao* topo, struct pedido* comeco, int* pontos, int* pedidos_errados, int* uso_lixeira, struct locais* elementos_mapa);
 
 void inicializa_elem_mapa(struct locais* elementos_mapa);
 

@@ -10,6 +10,7 @@ int main(){
 	struct pedido* comeco = NULL;
 	struct pedido* fim = NULL;
 	inicializa_fila(comeco, fim, &num_clientes);
+	inicializa_elem_mapa(elementos_mapa);
 	imprime_mapa();
 	inicializa_ncurses();
 	int movimento = getch();
