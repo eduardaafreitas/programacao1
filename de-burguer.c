@@ -9,6 +9,7 @@ void inicializa_fila(struct pedido* comeco, struct pedido* fim, int* num_cliente
 	insere_fim(comeco, fim, num_clientes);
 }
 
+/*acho q n vai precisar 
 int fila_vazia(struct pedido* comeco, struct pedido* fim){
 	if ((comeco == NULL) && (fim == NULL)){
 		printf("Não há elementos na lista.\n");
@@ -16,7 +17,7 @@ int fila_vazia(struct pedido* comeco, struct pedido* fim){
 	}
 
 	return 0;
-}
+}*/
 
 struct pedido* cria_pedido(int* num_clientes){
 	struct pedido* novo;
@@ -79,16 +80,6 @@ void pop(struct refeicao* topo){
 	free(aux);
 }
 
-void escreve_pilha(struct refeicao* topo){
-	struct refeicao* aux = topo;
-
-	while (aux != NULL){
-		printf("%d ", aux->ingrediente);
-
-		aux = aux->anterior;
-	}
-}
-
 void destroi_refeicao(struct refeicao* topo){
 	while (topo != NULL)
 		pop(topo);
@@ -107,19 +98,6 @@ int verifica_pedido(struct refeicao* topo, struct pedido* comeco){
 	if ((topo == NULL) && (i == strlen(cardapio[comeco->num_refeicao] - 1)))
 		return 1;
 	return 0;
-}
-
-int imprime_pedidos(struct pedido* comeco){ //imprime os cinco primeiros pedidos da fila
-	struct pedido* aux = comeco;
-
-	for (int i = 1; i < 6; i++){
-		printf("Pedido %d:\n", i);
-		for (int j = 0; j < strlen(cardapio[aux->num_refeicao]); j++){
-				printf("[%c] ", cardapio[aux->num_refeicao][j]);
-		}
-		printf("\n\n");
-		aux = aux->prox;
-	}
 }
 
 int verifica_direita(struct refeicao* topo, struct refeicao* comeco, int* pontos, int* pedidos_errados, int* uso_lixeira, struct locais* elementos_mapa){
@@ -174,9 +152,9 @@ int verifica_direita(struct refeicao* topo, struct refeicao* comeco, int* pontos
 
 	} else if ((elementos_mapa->chapeiro.lin == elementos_mapa->entrega.lin) && (elementos_mapa->chapeiro.col + 1 == elementos_mapa->entrega.col)){
 		if (verifica_pedido(topo, comeco) == 1){
-				pontos += 10;
+				(*pontos) += 10;
 		} else {
-			pedidos_errados++;
+			(*pedidos_errados)++;
 		}
 
 		destroi_refeicao(topo);
@@ -241,9 +219,9 @@ int verifica_esquerda(struct refeicao* topo, struct refeicao* comeco, int* ponto
 
 	} else if ((elementos_mapa->chapeiro.lin == elementos_mapa->entrega.lin) && (elementos_mapa->chapeiro.col - 1 == elementos_mapa->entrega.col)){
 		if (verifica_pedido(topo, comeco) == 1){
-				pontos += 10;
+				(*pontos) += 10;
 		} else {
-			pedidos_errados++;
+			(*pedidos_errados)++;
 		}
 
 		destroi_refeicao(topo);
@@ -307,9 +285,9 @@ int verifica_baixo(struct refeicao* topo, struct refeicao* comeco, int* pontos, 
 
 	} else if ((elementos_mapa->chapeiro.lin + 1 == elementos_mapa->entrega.lin) && (elementos_mapa->chapeiro.col == elementos_mapa->entrega.col)){
 		if (verifica_pedido(topo, comeco) == 1){
-				pontos += 10;
+				(*pontos) += 10;
 		} else {
-			pedidos_errados++;
+			(*pedidos_errados)++;
 		}
 
 		destroi_refeicao(topo);
@@ -374,16 +352,16 @@ int verifica_cima(struct refeicao* topo, struct refeicao* comeco, int* pontos, i
 
 	} else if ((elementos_mapa->chapeiro.lin - 1 == elementos_mapa->entrega.lin) && (elementos_mapa->chapeiro.col == elementos_mapa->entrega.col)){
 		if (verifica_pedido(topo, comeco) == 1){
-				pontos += 10;
+				(*pontos) += 10;
 		} else {
-			pedidos_errados++;
+			(*pedidos_errados)++;
 		}
 
 		destroi_refeicao(topo);
 		return 1;
 	
-	} else if (elementos_mapa->chapeiro.lin - 1 <= 0){  
-		return 1; //se for tentar andar para acima do limite maximo das linhas do mapa, a parede horizontal que fica na coluna 0
+	} else if ((elementos_mapa->chapeiro.lin - 1 <= 0) && (elementos_mapa->chapeiro.col != elementos_mapa->entrega.col)){  
+		return 1; //se for tentar andar para acima do limite maximo das linhas do mapa, a parede horizontal que fica na linha 0
 	}
 
 	return 0;
@@ -482,4 +460,40 @@ void inicializa_elem_mapa(struct locais* elementos_mapa){
 
 	elementos_mapa->parede_baixo.lin = 8;
 	elementos_mapa->parede_baixo.simbolo = '—';
+}
+
+void imprime_mapa(){
+	int i;
+	//imprime parede esquerda
+	for (i = 0; i <= 8; i++){
+		mvprintw(i, 0, "|");
+	}
+
+	//imprime parede direita
+	for (i = 0; i <= 8; i++){
+		mvprintw(i, 26, "|");
+	}
+
+	//imprime parede baixo
+	for (i = 0; i <= 26; i++){
+		mvprintw(8, i, "—");
+	}
+
+	//imprime parede cima
+	for (i = 0; i <= 26; i++){
+		mvprintw(0, i, "—");
+	}
+
+	//elementos do mapa
+	mvprintw(5, 25, "o");
+	mvprintw(0, 13, "@");
+	mvprintw(2, 23, "&");
+	mvprintw(7, 7, "[H]");
+	mvprintw(4, 2, "[F]");
+	mvprintw(7, 22, "[P]");
+	mvprintw(7, 2, "[p]");
+	mvprintw(7, 12, "[Q]");
+	mvprintw(7, 17, "[S]");
+	mvprintw(2, 2, "[R]");
+	refresh();
 }

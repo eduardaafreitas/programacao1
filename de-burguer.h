@@ -58,13 +58,9 @@ void push(struct refeicao* topo, char ingrediente);
 
 void pop(struct refeicao* topo);
 
-void escreve_pilha(struct refeicao* topo);
-
 void destroi_refeicao(struct refeicao* topo);
 
 int verifica_pedido(struct refeicao* topo, struct pedido* comeco);
-
-int imprime_pedidos(struct pedido* comeco);
 
 int verifica_direita(struct refeicao* topo, struct refeicao* comeco, int* pontos, int* pedidos_errados, int* uso_lixeira, struct locais* elementos_mapa);
 
@@ -75,3 +71,5 @@ int verifica_baixo(struct refeicao* topo, struct refeicao* comeco, int* pontos, 
 int verifica_cima(struct refeicao* topo, struct refeicao* comeco, int* pontos, int* pedidos_errados, int* uso_lixeira, struct locais* elementos_mapa);
 
 void inicializa_elem_mapa(struct locais* elementos_mapa);
+
+void imprime_mapa();

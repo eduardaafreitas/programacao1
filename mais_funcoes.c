@@ -3,6 +3,11 @@
 #include <ncurses.h>
 #include "de-burguer.h"
 
+//esse arquivo possui as funoces que ainda estao sendo escritas!
+
+// animacao inicial.
+
+
 void inicializa_ncurses(){
     initscr();            //inicializa a tela
     raw();                //desabilita o buffer
@@ -11,9 +16,6 @@ void inicializa_ncurses(){
     keypad(stdscr, TRUE); //habilita leitura de setas 
     //cores??
 }
-
-//criar funcao de imprimir mapa, de game over, animacao inicial. determinar o numero max de clientes, criar limite no verifica cima para acessar o ponto de entrega
-
 
 void regras(){
     char a;
@@ -24,9 +26,34 @@ void regras(){
     }
 }
 
-void pontuacao(int pontos){
+void pontuacao(int* pontos){
     //escolher onde vai ficar e as cores (declara elas com attron)
-    printw("PONTOS: %d", pontos);
+    printw("PONTOS: %d", (*pontos));
 }
 
-//planejamento: inicializa tudo, case switch para mover. checa se encostou em algo, checa os contadores para ver se eh game over.
+void game_over(){
+	
+}
+
+int imprime_pedidos(struct pedido* comeco){ //imprime os cinco primeiros pedidos da fila
+	struct pedido* aux = comeco;
+
+	for (int i = 1; i < 6; i++){
+		printf("Pedido %d:\n", i);	//colocar posicao 
+		for (int j = 0; j < strlen(cardapio[aux->num_refeicao]); j++){
+				printf("[%c] ", cardapio[aux->num_refeicao][j]);
+		}
+		printf("\n\n");
+		aux = aux->prox;
+	}
+}
+
+void escreve_pilha(struct refeicao* topo){
+	struct refeicao* aux = topo;
+
+	while (aux != NULL){
+		printf("%d ", aux->ingrediente);
+
+		aux = aux->anterior;
+	}
+}
