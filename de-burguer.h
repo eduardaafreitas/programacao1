@@ -7,7 +7,7 @@
 
 struct estacao{
 	char simbolo[3];
-	int lin, col1, col2, col3;
+	int lin, col[3];
 	char ingrediente;
 };
 
@@ -17,7 +17,7 @@ struct elem_mapa{ //mudar nome
 };
 
 struct locais{
-	struct elem_mapa parede_lateral, parede_horizontal, lixeira, entrega, chapeiro;
+	struct elem_mapa parede_direita, parede_baixo, lixeira, entrega, chapeiro;
 	struct estacao hamburguer, pao_cima, pao_baixo, queijo, salada, fritas, refrigerante;
 };
 
@@ -66,10 +66,12 @@ int verifica_pedido(struct refeicao* topo, struct pedido* comeco);
 
 int imprime_pedidos(struct pedido* comeco);
 
-int move_direita(struct refeicao* topo, struct refeicao* comeco, int* pontos, int* pedidos_errados, int* uso_lixeira, struct locais* elementos_mapa);
+int verifica_direita(struct refeicao* topo, struct refeicao* comeco, int* pontos, int* pedidos_errados, int* uso_lixeira, struct locais* elementos_mapa);
 
-int move_esquerda(struct refeicao* topo, struct refeicao* comeco, int* pontos, int* pedidos_errados, int* uso_lixeira, struct locais* elementos_mapa);
+int verifica_esquerda(struct refeicao* topo, struct refeicao* comeco, int* pontos, int* pedidos_errados, int* uso_lixeira, struct locais* elementos_mapa);
 
-int move_baixo(struct refeicao* topo, struct refeicao* comeco, int* pontos, int* pedidos_errados, int* uso_lixeira, struct locais* elementos_mapa);
+int verifica_baixo(struct refeicao* topo, struct refeicao* comeco, int* pontos, int* pedidos_errados, int* uso_lixeira, struct locais* elementos_mapa);
 
-int move_cima(struct refeicao* topo, struct refeicao* comeco, int* pontos, int* pedidos_errados, int* uso_lixeira, struct locais* elementos_mapa);
+int verifica_cima(struct refeicao* topo, struct refeicao* comeco, int* pontos, int* pedidos_errados, int* uso_lixeira, struct locais* elementos_mapa);
+
+void inicializa_elem_mapa(struct locais* elementos_mapa);
