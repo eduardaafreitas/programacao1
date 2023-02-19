@@ -62,13 +62,13 @@ void destroi_refeicao(struct refeicao* topo);
 
 int verifica_pedido(struct refeicao* topo, struct pedido* comeco);
 
-int verifica_direita(struct refeicao* topo, struct pedido* comeco, int* pontos, int* pedidos_errados, int* uso_lixeira, struct locais* elementos_mapa);
+int verifica_direita(struct refeicao* topo, struct pedido* comeco, int* pontos, int* pedidos_errados, int* uso_lixeira, struct locais elementos_mapa);
 
-int verifica_esquerda(struct refeicao* topo, struct pedido* comeco, int* pontos, int* pedidos_errados, int* uso_lixeira, struct locais* elementos_mapa);
+int verifica_esquerda(struct refeicao* topo, struct pedido* comeco, int* pontos, int* pedidos_errados, int* uso_lixeira, struct locais elementos_mapa);
 
-int verifica_baixo(struct refeicao* topo, struct pedido* comeco, int* pontos, int* pedidos_errados, int* uso_lixeira, struct locais* elementos_mapa);
+int verifica_baixo(struct refeicao* topo, struct pedido* comeco, int* pontos, int* pedidos_errados, int* uso_lixeira, struct locais elementos_mapa);
 
-int verifica_cima(struct refeicao* topo, struct pedido* comeco, int* pontos, int* pedidos_errados, int* uso_lixeira, struct locais* elementos_mapa);
+int verifica_cima(struct refeicao* topo, struct pedido* comeco, int* pontos, int* pedidos_errados, int* uso_lixeira, struct locais elementos_mapa);
 
 void inicializa_elem_mapa(struct locais* elementos_mapa);
 

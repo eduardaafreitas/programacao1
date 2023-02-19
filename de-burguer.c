@@ -10,15 +10,13 @@ void inicializa_fila(struct pedido* comeco, struct pedido* fim, int* num_cliente
 	insere_fim(comeco, fim, num_clientes);
 }
 
-/*acho q n vai precisar 
 int fila_vazia(struct pedido* comeco, struct pedido* fim){
 	if ((comeco == NULL) && (fim == NULL)){
-		printf("Não há elementos na lista.\n");
 		return 1;
 	}
 
 	return 0;
-}*/
+}
 
 struct pedido* cria_pedido(int* num_clientes){
 	struct pedido* novo;
@@ -101,57 +99,57 @@ int verifica_pedido(struct refeicao* topo, struct pedido* comeco){
 	return 0;
 }
 
-int verifica_direita(struct refeicao* topo, struct pedido* comeco, int* pontos, int* pedidos_errados, int* uso_lixeira, struct locais* elementos_mapa){
+int verifica_direita(struct refeicao* topo, struct pedido* comeco, int* pontos, int* pedidos_errados, int* uso_lixeira, struct locais elementos_mapa){
 //verifica se o personagem esta tentando "subir" em uma estacao, se sim, faz o que ela pede e retorna o inteiro 1, se nao retorna 0
 
-	if ((elementos_mapa->chapeiro.lin == elementos_mapa->hamburguer.lin) && ((elementos_mapa->chapeiro.col == elementos_mapa->hamburguer.col[1]) 
-			|| (elementos_mapa->chapeiro.col == elementos_mapa->hamburguer.col[2]) || (elementos_mapa->chapeiro.col == elementos_mapa->hamburguer.col[3]))){
+	if ((elementos_mapa.chapeiro.lin == elementos_mapa.hamburguer.lin) && ((elementos_mapa.chapeiro.col == elementos_mapa.hamburguer.col[1]) 
+			|| (elementos_mapa.chapeiro.col == elementos_mapa.hamburguer.col[2]) || (elementos_mapa.chapeiro.col == elementos_mapa.hamburguer.col[3]))){
 
-		push(topo, elementos_mapa->hamburguer.ingrediente);
+		push(topo, elementos_mapa.hamburguer.ingrediente);
 		return 1;
 
-	} else if ((elementos_mapa->chapeiro.lin == elementos_mapa->pao_cima.lin) && ((elementos_mapa->chapeiro.col == elementos_mapa->pao_cima.col[1]) 
-			|| (elementos_mapa->chapeiro.col == elementos_mapa->pao_cima.col[2]) || (elementos_mapa->chapeiro.col == elementos_mapa->pao_cima.col[3]))){
+	} else if ((elementos_mapa.chapeiro.lin == elementos_mapa.pao_cima.lin) && ((elementos_mapa.chapeiro.col == elementos_mapa.pao_cima.col[1]) 
+			|| (elementos_mapa.chapeiro.col == elementos_mapa.pao_cima.col[2]) || (elementos_mapa.chapeiro.col == elementos_mapa.pao_cima.col[3]))){
 
-		push(topo, elementos_mapa->pao_cima.ingrediente);
+		push(topo, elementos_mapa.pao_cima.ingrediente);
 		return 1;
 
-	} else if ((elementos_mapa->chapeiro.lin == elementos_mapa->pao_baixo.lin) && ((elementos_mapa->chapeiro.col == elementos_mapa->pao_baixo.col[1]) 
-			|| (elementos_mapa->chapeiro.col == elementos_mapa->pao_baixo.col[2]) || (elementos_mapa->chapeiro.col == elementos_mapa->pao_baixo.col[3]))){
+	} else if ((elementos_mapa.chapeiro.lin == elementos_mapa.pao_baixo.lin) && ((elementos_mapa.chapeiro.col == elementos_mapa.pao_baixo.col[1]) 
+			|| (elementos_mapa.chapeiro.col == elementos_mapa.pao_baixo.col[2]) || (elementos_mapa.chapeiro.col == elementos_mapa.pao_baixo.col[3]))){
 
-		push(topo, elementos_mapa->pao_baixo.ingrediente);
+		push(topo, elementos_mapa.pao_baixo.ingrediente);
 		return 1;
 
-	} else if ((elementos_mapa->chapeiro.lin == elementos_mapa->queijo.lin) && ((elementos_mapa->chapeiro.col == elementos_mapa->queijo.col[1]) 
-			|| (elementos_mapa->chapeiro.col == elementos_mapa->queijo.col[2]) || (elementos_mapa->chapeiro.col == elementos_mapa->queijo.col[3]))){
+	} else if ((elementos_mapa.chapeiro.lin == elementos_mapa.queijo.lin) && ((elementos_mapa.chapeiro.col == elementos_mapa.queijo.col[1]) 
+			|| (elementos_mapa.chapeiro.col == elementos_mapa.queijo.col[2]) || (elementos_mapa.chapeiro.col == elementos_mapa.queijo.col[3]))){
 
-		push(topo, elementos_mapa->queijo.ingrediente);
+		push(topo, elementos_mapa.queijo.ingrediente);
 		return 1;
 
-	} else if ((elementos_mapa->chapeiro.lin == elementos_mapa->salada.lin) && ((elementos_mapa->chapeiro.col == elementos_mapa->salada.col[1]) 
-			|| (elementos_mapa->chapeiro.col == elementos_mapa->salada.col[2]) || (elementos_mapa->chapeiro.col == elementos_mapa->salada.col[3]))){
+	} else if ((elementos_mapa.chapeiro.lin == elementos_mapa.salada.lin) && ((elementos_mapa.chapeiro.col == elementos_mapa.salada.col[1]) 
+			|| (elementos_mapa.chapeiro.col == elementos_mapa.salada.col[2]) || (elementos_mapa.chapeiro.col == elementos_mapa.salada.col[3]))){
 
-		push(topo, elementos_mapa->salada.ingrediente);
+		push(topo, elementos_mapa.salada.ingrediente);
 		return 1;
 
-	} else if ((elementos_mapa->chapeiro.lin == elementos_mapa->fritas.lin) && ((elementos_mapa->chapeiro.col == elementos_mapa->fritas.col[1]) 
-			|| (elementos_mapa->chapeiro.col == elementos_mapa->fritas.col[2]) || (elementos_mapa->chapeiro.col == elementos_mapa->fritas.col[3]))){
+	} else if ((elementos_mapa.chapeiro.lin == elementos_mapa.fritas.lin) && ((elementos_mapa.chapeiro.col == elementos_mapa.fritas.col[1]) 
+			|| (elementos_mapa.chapeiro.col == elementos_mapa.fritas.col[2]) || (elementos_mapa.chapeiro.col == elementos_mapa.fritas.col[3]))){
 
-		push(topo, elementos_mapa->fritas.ingrediente);
+		push(topo, elementos_mapa.fritas.ingrediente);
 		return 1;
 
-	} else if ((elementos_mapa->chapeiro.lin == elementos_mapa->refrigerante.lin) && ((elementos_mapa->chapeiro.col == elementos_mapa->refrigerante.col[1]) 
-			|| (elementos_mapa->chapeiro.col == elementos_mapa->refrigerante.col[2]) || (elementos_mapa->chapeiro.col == elementos_mapa->refrigerante.col[3]))){
+	} else if ((elementos_mapa.chapeiro.lin == elementos_mapa.refrigerante.lin) && ((elementos_mapa.chapeiro.col == elementos_mapa.refrigerante.col[1]) 
+			|| (elementos_mapa.chapeiro.col == elementos_mapa.refrigerante.col[2]) || (elementos_mapa.chapeiro.col == elementos_mapa.refrigerante.col[3]))){
 
-		push(topo, elementos_mapa->refrigerante.ingrediente);
+		push(topo, elementos_mapa.refrigerante.ingrediente);
 		return 1;
 
-	} else if ((elementos_mapa->chapeiro.lin == elementos_mapa->lixeira.lin) && (elementos_mapa->chapeiro.col + 1 == elementos_mapa->lixeira.col)){
+	} else if ((elementos_mapa.chapeiro.lin == elementos_mapa.lixeira.lin) && (elementos_mapa.chapeiro.col + 1 == elementos_mapa.lixeira.col)){
 		uso_lixeira++;
 		destroi_refeicao(topo);
 		return 1;
 
-	} else if ((elementos_mapa->chapeiro.lin == elementos_mapa->entrega.lin) && (elementos_mapa->chapeiro.col + 1 == elementos_mapa->entrega.col)){
+	} else if ((elementos_mapa.chapeiro.lin == elementos_mapa.entrega.lin) && (elementos_mapa.chapeiro.col + 1 == elementos_mapa.entrega.col)){
 		if (verifica_pedido(topo, comeco) == 1){
 				(*pontos) += 10;
 		} else {
@@ -161,64 +159,64 @@ int verifica_direita(struct refeicao* topo, struct pedido* comeco, int* pontos, 
 		destroi_refeicao(topo);
 		return 1;
 	
-	} else if (elementos_mapa->chapeiro.col + 1 >= elementos_mapa->parede_direita.col){  
+	} else if (elementos_mapa.chapeiro.col + 1 >= elementos_mapa.parede_direita.col){  
 		return 1; //se for tentar andar para a direita do limite maximo das colunas do mapa, a parede lateral
 	}
 
 	return 0;
 }
 
-int verifica_esquerda(struct refeicao* topo, struct pedido* comeco, int* pontos, int* pedidos_errados, int* uso_lixeira, struct locais* elementos_mapa){
+int verifica_esquerda(struct refeicao* topo, struct pedido* comeco, int* pontos, int* pedidos_errados, int* uso_lixeira, struct locais elementos_mapa){
 //verifica se o personagem esta tentando "subir" em uma estacao, se sim, faz o que ela pede e retorna o inteiro 1, se nao retorna 0
 
-	if ((elementos_mapa->chapeiro.lin == elementos_mapa->hamburguer.lin) && ((elementos_mapa->chapeiro.col == elementos_mapa->hamburguer.col[1]) 
-			|| (elementos_mapa->chapeiro.col == elementos_mapa->hamburguer.col[2]) || (elementos_mapa->chapeiro.col == elementos_mapa->hamburguer.col[3]))){
+	if ((elementos_mapa.chapeiro.lin == elementos_mapa.hamburguer.lin) && ((elementos_mapa.chapeiro.col == elementos_mapa.hamburguer.col[1]) 
+			|| (elementos_mapa.chapeiro.col == elementos_mapa.hamburguer.col[2]) || (elementos_mapa.chapeiro.col == elementos_mapa.hamburguer.col[3]))){
 
-		push(topo, elementos_mapa->hamburguer.ingrediente);
+		push(topo, elementos_mapa.hamburguer.ingrediente);
 		return 1;
 
-	} else if ((elementos_mapa->chapeiro.lin == elementos_mapa->pao_cima.lin) && ((elementos_mapa->chapeiro.col == elementos_mapa->pao_cima.col[1]) 
-			|| (elementos_mapa->chapeiro.col == elementos_mapa->pao_cima.col[2]) || (elementos_mapa->chapeiro.col == elementos_mapa->pao_cima.col[3]))){
+	} else if ((elementos_mapa.chapeiro.lin == elementos_mapa.pao_cima.lin) && ((elementos_mapa.chapeiro.col == elementos_mapa.pao_cima.col[1]) 
+			|| (elementos_mapa.chapeiro.col == elementos_mapa.pao_cima.col[2]) || (elementos_mapa.chapeiro.col == elementos_mapa.pao_cima.col[3]))){
 
-		push(topo, elementos_mapa->pao_cima.ingrediente);
+		push(topo, elementos_mapa.pao_cima.ingrediente);
 		return 1;
 
-	} else if ((elementos_mapa->chapeiro.lin == elementos_mapa->pao_baixo.lin) && ((elementos_mapa->chapeiro.col == elementos_mapa->pao_baixo.col[1]) 
-			|| (elementos_mapa->chapeiro.col == elementos_mapa->pao_baixo.col[2]) || (elementos_mapa->chapeiro.col == elementos_mapa->pao_baixo.col[3]))){
+	} else if ((elementos_mapa.chapeiro.lin == elementos_mapa.pao_baixo.lin) && ((elementos_mapa.chapeiro.col == elementos_mapa.pao_baixo.col[1]) 
+			|| (elementos_mapa.chapeiro.col == elementos_mapa.pao_baixo.col[2]) || (elementos_mapa.chapeiro.col == elementos_mapa.pao_baixo.col[3]))){
 
-		push(topo, elementos_mapa->pao_baixo.ingrediente);
+		push(topo, elementos_mapa.pao_baixo.ingrediente);
 		return 1;
 
-	} else if ((elementos_mapa->chapeiro.lin == elementos_mapa->queijo.lin) && ((elementos_mapa->chapeiro.col == elementos_mapa->queijo.col[1]) 
-			|| (elementos_mapa->chapeiro.col == elementos_mapa->queijo.col[2]) || (elementos_mapa->chapeiro.col == elementos_mapa->queijo.col[3]))){
+	} else if ((elementos_mapa.chapeiro.lin == elementos_mapa.queijo.lin) && ((elementos_mapa.chapeiro.col == elementos_mapa.queijo.col[1]) 
+			|| (elementos_mapa.chapeiro.col == elementos_mapa.queijo.col[2]) || (elementos_mapa.chapeiro.col == elementos_mapa.queijo.col[3]))){
 
-		push(topo, elementos_mapa->queijo.ingrediente);
+		push(topo, elementos_mapa.queijo.ingrediente);
 		return 1;
 
-	} else if ((elementos_mapa->chapeiro.lin == elementos_mapa->salada.lin) && ((elementos_mapa->chapeiro.col == elementos_mapa->salada.col[1]) 
-			|| (elementos_mapa->chapeiro.col == elementos_mapa->salada.col[2]) || (elementos_mapa->chapeiro.col == elementos_mapa->salada.col[3]))){
+	} else if ((elementos_mapa.chapeiro.lin == elementos_mapa.salada.lin) && ((elementos_mapa.chapeiro.col == elementos_mapa.salada.col[1]) 
+			|| (elementos_mapa.chapeiro.col == elementos_mapa.salada.col[2]) || (elementos_mapa.chapeiro.col == elementos_mapa.salada.col[3]))){
 
-		push(topo, elementos_mapa->salada.ingrediente);
+		push(topo, elementos_mapa.salada.ingrediente);
 		return 1;
 
-	} else if ((elementos_mapa->chapeiro.lin == elementos_mapa->fritas.lin) && ((elementos_mapa->chapeiro.col == elementos_mapa->fritas.col[1]) 
-			|| (elementos_mapa->chapeiro.col == elementos_mapa->fritas.col[2]) || (elementos_mapa->chapeiro.col == elementos_mapa->fritas.col[3]))){
+	} else if ((elementos_mapa.chapeiro.lin == elementos_mapa.fritas.lin) && ((elementos_mapa.chapeiro.col == elementos_mapa.fritas.col[1]) 
+			|| (elementos_mapa.chapeiro.col == elementos_mapa.fritas.col[2]) || (elementos_mapa.chapeiro.col == elementos_mapa.fritas.col[3]))){
 
-		push(topo, elementos_mapa->fritas.ingrediente);
+		push(topo, elementos_mapa.fritas.ingrediente);
 		return 1;
 
-	} else if ((elementos_mapa->chapeiro.lin == elementos_mapa->refrigerante.lin) && ((elementos_mapa->chapeiro.col == elementos_mapa->refrigerante.col[1]) 
-			|| (elementos_mapa->chapeiro.col == elementos_mapa->refrigerante.col[2]) || (elementos_mapa->chapeiro.col == elementos_mapa->refrigerante.col[3]))){
+	} else if ((elementos_mapa.chapeiro.lin == elementos_mapa.refrigerante.lin) && ((elementos_mapa.chapeiro.col == elementos_mapa.refrigerante.col[1]) 
+			|| (elementos_mapa.chapeiro.col == elementos_mapa.refrigerante.col[2]) || (elementos_mapa.chapeiro.col == elementos_mapa.refrigerante.col[3]))){
 
-		push(topo, elementos_mapa->refrigerante.ingrediente);
+		push(topo, elementos_mapa.refrigerante.ingrediente);
 		return 1;
 
-	} else if ((elementos_mapa->chapeiro.lin == elementos_mapa->lixeira.lin) && (elementos_mapa->chapeiro.col - 1 == elementos_mapa->lixeira.col)){
+	} else if ((elementos_mapa.chapeiro.lin == elementos_mapa.lixeira.lin) && (elementos_mapa.chapeiro.col - 1 == elementos_mapa.lixeira.col)){
 		uso_lixeira++;
 		destroi_refeicao(topo);
 		return 1;
 
-	} else if ((elementos_mapa->chapeiro.lin == elementos_mapa->entrega.lin) && (elementos_mapa->chapeiro.col - 1 == elementos_mapa->entrega.col)){
+	} else if ((elementos_mapa.chapeiro.lin == elementos_mapa.entrega.lin) && (elementos_mapa.chapeiro.col - 1 == elementos_mapa.entrega.col)){
 		if (verifica_pedido(topo, comeco) == 1){
 				(*pontos) += 10;
 		} else {
@@ -228,63 +226,63 @@ int verifica_esquerda(struct refeicao* topo, struct pedido* comeco, int* pontos,
 		destroi_refeicao(topo);
 		return 1;
 	
-	} else if (elementos_mapa->chapeiro.col - 1 <= 0){  
+	} else if (elementos_mapa.chapeiro.col - 1 <= 0){  
 		return 1; //se for tentar andar para a direita do limite maximo das colunas do mapa, a parede lateral que fica na coluna 0
 	}
 
 	return 0;
 }
 
-int verifica_baixo(struct refeicao* topo, struct pedido* comeco, int* pontos, int* pedidos_errados, int* uso_lixeira, struct locais* elementos_mapa){
+int verifica_baixo(struct refeicao* topo, struct pedido* comeco, int* pontos, int* pedidos_errados, int* uso_lixeira, struct locais elementos_mapa){
 //verifica se o personagem esta tentando "subir" em uma estacao, se sim, faz o que ela pede e retorna o inteiro 1, se nao retorna 0
 
-	if ((elementos_mapa->chapeiro.lin + 1 == elementos_mapa->hamburguer.lin) && ((elementos_mapa->chapeiro.col == elementos_mapa->hamburguer.col[1]) 
-			|| (elementos_mapa->chapeiro.col == elementos_mapa->hamburguer.col[2]) || (elementos_mapa->chapeiro.col == elementos_mapa->hamburguer.col[3]))){
+	if ((elementos_mapa.chapeiro.lin + 1 == elementos_mapa.hamburguer.lin) && ((elementos_mapa.chapeiro.col == elementos_mapa.hamburguer.col[1]) 
+			|| (elementos_mapa.chapeiro.col == elementos_mapa.hamburguer.col[2]) || (elementos_mapa.chapeiro.col == elementos_mapa.hamburguer.col[3]))){
 
-		push(topo, elementos_mapa->hamburguer.ingrediente);
+		push(topo, elementos_mapa.hamburguer.ingrediente);
 		return 1;
 
-	} else if ((elementos_mapa->chapeiro.lin + 1 == elementos_mapa->pao_cima.lin) && ((elementos_mapa->chapeiro.col == elementos_mapa->pao_cima.col[1]) 
-			|| (elementos_mapa->chapeiro.col == elementos_mapa->pao_cima.col[2]) || (elementos_mapa->chapeiro.col == elementos_mapa->pao_cima.col[3]))){
+	} else if ((elementos_mapa.chapeiro.lin + 1 == elementos_mapa.pao_cima.lin) && ((elementos_mapa.chapeiro.col == elementos_mapa.pao_cima.col[1]) 
+			|| (elementos_mapa.chapeiro.col == elementos_mapa.pao_cima.col[2]) || (elementos_mapa.chapeiro.col == elementos_mapa.pao_cima.col[3]))){
 
-		push(topo, elementos_mapa->pao_cima.ingrediente);
+		push(topo, elementos_mapa.pao_cima.ingrediente);
 		return 1;
 
-	} else if ((elementos_mapa->chapeiro.lin + 1  == elementos_mapa->pao_baixo.lin) && ((elementos_mapa->chapeiro.col == elementos_mapa->pao_baixo.col[1]) 
-			|| (elementos_mapa->chapeiro.col == elementos_mapa->pao_baixo.col[2]) || (elementos_mapa->chapeiro.col == elementos_mapa->pao_baixo.col[3]))){
-		push(topo, elementos_mapa->pao_baixo.ingrediente);
+	} else if ((elementos_mapa.chapeiro.lin + 1  == elementos_mapa.pao_baixo.lin) && ((elementos_mapa.chapeiro.col == elementos_mapa.pao_baixo.col[1]) 
+			|| (elementos_mapa.chapeiro.col == elementos_mapa.pao_baixo.col[2]) || (elementos_mapa.chapeiro.col == elementos_mapa.pao_baixo.col[3]))){
+		push(topo, elementos_mapa.pao_baixo.ingrediente);
 		return 1;
 
-	} else if ((elementos_mapa->chapeiro.lin + 1 == elementos_mapa->queijo.lin) && ((elementos_mapa->chapeiro.col == elementos_mapa->queijo.col[1]) 
-			|| (elementos_mapa->chapeiro.col == elementos_mapa->queijo.col[2]) || (elementos_mapa->chapeiro.col == elementos_mapa->queijo.col[3]))){
+	} else if ((elementos_mapa.chapeiro.lin + 1 == elementos_mapa.queijo.lin) && ((elementos_mapa.chapeiro.col == elementos_mapa.queijo.col[1]) 
+			|| (elementos_mapa.chapeiro.col == elementos_mapa.queijo.col[2]) || (elementos_mapa.chapeiro.col == elementos_mapa.queijo.col[3]))){
 
-		push(topo, elementos_mapa->queijo.ingrediente);
+		push(topo, elementos_mapa.queijo.ingrediente);
 		return 1;
 
-	} else if ((elementos_mapa->chapeiro.lin + 1 == elementos_mapa->salada.lin) && ((elementos_mapa->chapeiro.col == elementos_mapa->salada.col[1]) 
-			|| (elementos_mapa->chapeiro.col == elementos_mapa->salada.col[2]) || (elementos_mapa->chapeiro.col == elementos_mapa->salada.col[3]))){
+	} else if ((elementos_mapa.chapeiro.lin + 1 == elementos_mapa.salada.lin) && ((elementos_mapa.chapeiro.col == elementos_mapa.salada.col[1]) 
+			|| (elementos_mapa.chapeiro.col == elementos_mapa.salada.col[2]) || (elementos_mapa.chapeiro.col == elementos_mapa.salada.col[3]))){
 
-		push(topo, elementos_mapa->salada.ingrediente);
+		push(topo, elementos_mapa.salada.ingrediente);
 		return 1;
 
-	} else if ((elementos_mapa->chapeiro.lin + 1 == elementos_mapa->fritas.lin) && ((elementos_mapa->chapeiro.col == elementos_mapa->fritas.col[1]) 
-			|| (elementos_mapa->chapeiro.col == elementos_mapa->fritas.col[2]) || (elementos_mapa->chapeiro.col == elementos_mapa->fritas.col[3]))){
+	} else if ((elementos_mapa.chapeiro.lin + 1 == elementos_mapa.fritas.lin) && ((elementos_mapa.chapeiro.col == elementos_mapa.fritas.col[1]) 
+			|| (elementos_mapa.chapeiro.col == elementos_mapa.fritas.col[2]) || (elementos_mapa.chapeiro.col == elementos_mapa.fritas.col[3]))){
 
-		push(topo, elementos_mapa->fritas.ingrediente);
+		push(topo, elementos_mapa.fritas.ingrediente);
 		return 1;
 
-	} else if ((elementos_mapa->chapeiro.lin + 1 == elementos_mapa->refrigerante.lin) && ((elementos_mapa->chapeiro.col == elementos_mapa->refrigerante.col[1]) 
-			|| (elementos_mapa->chapeiro.col == elementos_mapa->refrigerante.col[2]) || (elementos_mapa->chapeiro.col == elementos_mapa->refrigerante.col[3]))){
+	} else if ((elementos_mapa.chapeiro.lin + 1 == elementos_mapa.refrigerante.lin) && ((elementos_mapa.chapeiro.col == elementos_mapa.refrigerante.col[1]) 
+			|| (elementos_mapa.chapeiro.col == elementos_mapa.refrigerante.col[2]) || (elementos_mapa.chapeiro.col == elementos_mapa.refrigerante.col[3]))){
 
-		push(topo, elementos_mapa->refrigerante.ingrediente);
+		push(topo, elementos_mapa.refrigerante.ingrediente);
 		return 1;
 
-	} else if ((elementos_mapa->chapeiro.lin + 1 == elementos_mapa->lixeira.lin) && (elementos_mapa->chapeiro.col == elementos_mapa->lixeira.col)){
+	} else if ((elementos_mapa.chapeiro.lin + 1 == elementos_mapa.lixeira.lin) && (elementos_mapa.chapeiro.col == elementos_mapa.lixeira.col)){
 		uso_lixeira++;
 		destroi_refeicao(topo);
 		return 1;
 
-	} else if ((elementos_mapa->chapeiro.lin + 1 == elementos_mapa->entrega.lin) && (elementos_mapa->chapeiro.col == elementos_mapa->entrega.col)){
+	} else if ((elementos_mapa.chapeiro.lin + 1 == elementos_mapa.entrega.lin) && (elementos_mapa.chapeiro.col == elementos_mapa.entrega.col)){
 		if (verifica_pedido(topo, comeco) == 1){
 				(*pontos) += 10;
 		} else {
@@ -294,64 +292,64 @@ int verifica_baixo(struct refeicao* topo, struct pedido* comeco, int* pontos, in
 		destroi_refeicao(topo);
 		return 1;
 	
-	} else if (elementos_mapa->chapeiro.lin + 1 >= elementos_mapa->parede_baixo.lin){  
+	} else if (elementos_mapa.chapeiro.lin + 1 >= elementos_mapa.parede_baixo.lin){  
 		return 1; //se for tentar andar para abaixo do limite maximo das linhas do mapa, a parede horizontal
 	}
 
 	return 0;
 }
 
-int verifica_cima(struct refeicao* topo, struct pedido* comeco, int* pontos, int* pedidos_errados, int* uso_lixeira, struct locais* elementos_mapa){
+int verifica_cima(struct refeicao* topo, struct pedido* comeco, int* pontos, int* pedidos_errados, int* uso_lixeira, struct locais elementos_mapa){
 //verifica se o personagem esta tentando "subir" em uma estacao, se sim, faz o que ela pede e retorna o inteiro 1, se nao retorna 0
 
-	if ((elementos_mapa->chapeiro.lin - 1 == elementos_mapa->hamburguer.lin) && ((elementos_mapa->chapeiro.col == elementos_mapa->hamburguer.col[1]) 
-			|| (elementos_mapa->chapeiro.col == elementos_mapa->hamburguer.col[2]) || (elementos_mapa->chapeiro.col == elementos_mapa->hamburguer.col[3]))){
+	if ((elementos_mapa.chapeiro.lin - 1 == elementos_mapa.hamburguer.lin) && ((elementos_mapa.chapeiro.col == elementos_mapa.hamburguer.col[1]) 
+			|| (elementos_mapa.chapeiro.col == elementos_mapa.hamburguer.col[2]) || (elementos_mapa.chapeiro.col == elementos_mapa.hamburguer.col[3]))){
 
-		push(topo, elementos_mapa->hamburguer.ingrediente);
+		push(topo, elementos_mapa.hamburguer.ingrediente);
 		return 1;
 
-	} else if ((elementos_mapa->chapeiro.lin - 1 == elementos_mapa->pao_cima.lin) && ((elementos_mapa->chapeiro.col == elementos_mapa->pao_cima.col[1]) 
-			|| (elementos_mapa->chapeiro.col == elementos_mapa->pao_cima.col[2]) || (elementos_mapa->chapeiro.col == elementos_mapa->pao_cima.col[3]))){
+	} else if ((elementos_mapa.chapeiro.lin - 1 == elementos_mapa.pao_cima.lin) && ((elementos_mapa.chapeiro.col == elementos_mapa.pao_cima.col[1]) 
+			|| (elementos_mapa.chapeiro.col == elementos_mapa.pao_cima.col[2]) || (elementos_mapa.chapeiro.col == elementos_mapa.pao_cima.col[3]))){
 
-		push(topo, elementos_mapa->pao_cima.ingrediente);
+		push(topo, elementos_mapa.pao_cima.ingrediente);
 		return 1;
 
-	} else if ((elementos_mapa->chapeiro.lin - 1 == elementos_mapa->pao_baixo.lin) && ((elementos_mapa->chapeiro.col == elementos_mapa->pao_baixo.col[1]) 
-			|| (elementos_mapa->chapeiro.col == elementos_mapa->pao_baixo.col[2]) || (elementos_mapa->chapeiro.col == elementos_mapa->pao_baixo.col[3]))){
+	} else if ((elementos_mapa.chapeiro.lin - 1 == elementos_mapa.pao_baixo.lin) && ((elementos_mapa.chapeiro.col == elementos_mapa.pao_baixo.col[1]) 
+			|| (elementos_mapa.chapeiro.col == elementos_mapa.pao_baixo.col[2]) || (elementos_mapa.chapeiro.col == elementos_mapa.pao_baixo.col[3]))){
 
-		push(topo, elementos_mapa->pao_baixo.ingrediente);
+		push(topo, elementos_mapa.pao_baixo.ingrediente);
 		return 1;
 
-	} else if ((elementos_mapa->chapeiro.lin - 1 == elementos_mapa->queijo.lin) && ((elementos_mapa->chapeiro.col == elementos_mapa->queijo.col[1]) 
-			|| (elementos_mapa->chapeiro.col == elementos_mapa->queijo.col[2]) || (elementos_mapa->chapeiro.col == elementos_mapa->queijo.col[3]))){
+	} else if ((elementos_mapa.chapeiro.lin - 1 == elementos_mapa.queijo.lin) && ((elementos_mapa.chapeiro.col == elementos_mapa.queijo.col[1]) 
+			|| (elementos_mapa.chapeiro.col == elementos_mapa.queijo.col[2]) || (elementos_mapa.chapeiro.col == elementos_mapa.queijo.col[3]))){
 
-		push(topo, elementos_mapa->queijo.ingrediente);
+		push(topo, elementos_mapa.queijo.ingrediente);
 		return 1;
 
-	} else if ((elementos_mapa->chapeiro.lin - 1 == elementos_mapa->salada.lin) && ((elementos_mapa->chapeiro.col == elementos_mapa->salada.col[1]) 
-			|| (elementos_mapa->chapeiro.col == elementos_mapa->salada.col[2]) || (elementos_mapa->chapeiro.col == elementos_mapa->salada.col[3]))){
+	} else if ((elementos_mapa.chapeiro.lin - 1 == elementos_mapa.salada.lin) && ((elementos_mapa.chapeiro.col == elementos_mapa.salada.col[1]) 
+			|| (elementos_mapa.chapeiro.col == elementos_mapa.salada.col[2]) || (elementos_mapa.chapeiro.col == elementos_mapa.salada.col[3]))){
 
-		push(topo, elementos_mapa->salada.ingrediente);
+		push(topo, elementos_mapa.salada.ingrediente);
 		return 1;
 
-	} else if ((elementos_mapa->chapeiro.lin - 1 == elementos_mapa->fritas.lin) && ((elementos_mapa->chapeiro.col == elementos_mapa->fritas.col[1]) 
-			|| (elementos_mapa->chapeiro.col == elementos_mapa->fritas.col[2]) || (elementos_mapa->chapeiro.col == elementos_mapa->fritas.col[3]))){
+	} else if ((elementos_mapa.chapeiro.lin - 1 == elementos_mapa.fritas.lin) && ((elementos_mapa.chapeiro.col == elementos_mapa.fritas.col[1]) 
+			|| (elementos_mapa.chapeiro.col == elementos_mapa.fritas.col[2]) || (elementos_mapa.chapeiro.col == elementos_mapa.fritas.col[3]))){
 
-		push(topo, elementos_mapa->fritas.ingrediente);
+		push(topo, elementos_mapa.fritas.ingrediente);
 		return 1;
 
-	} else if ((elementos_mapa->chapeiro.lin - 1 == elementos_mapa->refrigerante.lin) && ((elementos_mapa->chapeiro.col == elementos_mapa->refrigerante.col[1]) 
-			|| (elementos_mapa->chapeiro.col == elementos_mapa->refrigerante.col[2]) || (elementos_mapa->chapeiro.col == elementos_mapa->refrigerante.col[3]))){
+	} else if ((elementos_mapa.chapeiro.lin - 1 == elementos_mapa.refrigerante.lin) && ((elementos_mapa.chapeiro.col == elementos_mapa.refrigerante.col[1]) 
+			|| (elementos_mapa.chapeiro.col == elementos_mapa.refrigerante.col[2]) || (elementos_mapa.chapeiro.col == elementos_mapa.refrigerante.col[3]))){
 
-		push(topo, elementos_mapa->refrigerante.ingrediente);
+		push(topo, elementos_mapa.refrigerante.ingrediente);
 		return 1;
 
-	} else if ((elementos_mapa->chapeiro.lin - 1 == elementos_mapa->lixeira.lin) && (elementos_mapa->chapeiro.col == elementos_mapa->lixeira.col)){
+	} else if ((elementos_mapa.chapeiro.lin - 1 == elementos_mapa.lixeira.lin) && (elementos_mapa.chapeiro.col == elementos_mapa.lixeira.col)){
 		uso_lixeira++;
 		destroi_refeicao(topo);
 		return 1;
 
-	} else if ((elementos_mapa->chapeiro.lin - 1 == elementos_mapa->entrega.lin) && (elementos_mapa->chapeiro.col == elementos_mapa->entrega.col)){
+	} else if ((elementos_mapa.chapeiro.lin - 1 == elementos_mapa.entrega.lin) && (elementos_mapa.chapeiro.col == elementos_mapa.entrega.col)){
 		if (verifica_pedido(topo, comeco) == 1){
 				(*pontos) += 10;
 		} else {
@@ -361,7 +359,7 @@ int verifica_cima(struct refeicao* topo, struct pedido* comeco, int* pontos, int
 		destroi_refeicao(topo);
 		return 1;
 	
-	} else if ((elementos_mapa->chapeiro.lin - 1 <= 0) && (elementos_mapa->chapeiro.col != elementos_mapa->entrega.col)){  
+	} else if ((elementos_mapa.chapeiro.lin - 1 <= 0) && (elementos_mapa.chapeiro.col != elementos_mapa.entrega.col)){  
 		return 1; //se for tentar andar para acima do limite maximo das linhas do mapa, a parede horizontal que fica na linha 0
 	}
 
