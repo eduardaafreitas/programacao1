@@ -4,6 +4,15 @@
 #include <ncurses.h>
 #include "de-burguer.h"
 
+void inicializa_ncurses(){
+    initscr();            //inicializa a tela
+    raw();                //desabilita o buffer
+    noecho();             //nao mostra os caracteres digitados
+    curs_set(FALSE);      //não mostra o cursor na tela 
+    keypad(stdscr, TRUE); //habilita leitura de setas 
+    //cores??
+}
+
 void inicializa_fila(struct pedido* comeco, struct pedido* fim, int* num_clientes){
 	insere_fim(comeco, fim, num_clientes);
 	insere_fim(comeco, fim, num_clientes);
@@ -14,12 +23,11 @@ int fila_vazia(struct pedido* comeco, struct pedido* fim){
 	if ((comeco == NULL) && (fim == NULL)){
 		return 1;
 	}
-
 	return 0;
 }
 
 struct pedido* cria_pedido(int* num_clientes){
-	struct pedido* novo;
+	struct pedido* novo = malloc(sizeof(struct pedido));
 	novo->prox = NULL;
 	novo->anterior = NULL;
 	novo->cliente = (*num_clientes++);
@@ -84,20 +92,37 @@ void destroi_refeicao(struct refeicao* topo){
 		pop(topo);
 }
 
+
 int verifica_pedido(struct refeicao* topo, struct pedido* comeco){
-	int i = 0;
+	//int i = 0;
 	//enquanto o ingrediente no cardapio eh o mesmo no lanche, e nenhum dos dois chegou ao fim
-	while ((topo != NULL) && (cardapio[comeco->num_refeicao][i] == topo->ingrediente)
-				 && (i <= strlen(cardapio[comeco->num_refeicao])) - 1){
-		i++;
-		pop(topo);
+	//pedidoatual = *num_refeicao;
+
+	printf( "%d: indice \n" , comeco->num_refeicao);
+	if(topo == NULL)
+		return 1;
+	else
+		return 0;
+}
+	/*else{
+		while(((topo->ingrediente) != (*(cardapio[comeco->num_refeicao]))) &&(i <= strlen(cardapio[comeco->num_refeicao])) - 1){
+			i++;
+			pop(topo);
+		}
+			return 0;
 	}
+
+//	while ((topo != NULL) && ((cardapio[comeco->num_refeicao]) == topo->ingrediente)
+//				 && (i <= strlen(cardapio[comeco->num_refeicao])) - 1){
+//		i++;
+//		pop(topo);
+//	}
 
 	//se ambos chegaram ao fim, sao iguais
 	if ((topo == NULL) && (i == strlen(cardapio[comeco->num_refeicao] - 1)))
 		return 1;
-	return 0;
-}
+	return 0;*/
+
 
 int verifica_direita(struct refeicao* topo, struct pedido* comeco, int* pontos, int* pedidos_errados, int* uso_lixeira, struct locais elementos_mapa){
 //verifica se o personagem esta tentando "subir" em uma estacao, se sim, faz o que ela pede e retorna o inteiro 1, se nao retorna 0
@@ -150,7 +175,7 @@ int verifica_direita(struct refeicao* topo, struct pedido* comeco, int* pontos, 
 		return 1;
 
 	} else if ((elementos_mapa.chapeiro.lin == elementos_mapa.entrega.lin) && (elementos_mapa.chapeiro.col + 1 == elementos_mapa.entrega.col)){
-		if (verifica_pedido(topo, comeco) == 1){
+		if (verifica_pedido(topo, comeco/*, cardapio*/) == 1){
 				(*pontos) += 10;
 		} else {
 			(*pedidos_errados)++;
@@ -217,7 +242,7 @@ int verifica_esquerda(struct refeicao* topo, struct pedido* comeco, int* pontos,
 		return 1;
 
 	} else if ((elementos_mapa.chapeiro.lin == elementos_mapa.entrega.lin) && (elementos_mapa.chapeiro.col - 1 == elementos_mapa.entrega.col)){
-		if (verifica_pedido(topo, comeco) == 1){
+		if (verifica_pedido(topo, comeco/*, cardapio*/) == 1){
 				(*pontos) += 10;
 		} else {
 			(*pedidos_errados)++;
@@ -283,7 +308,7 @@ int verifica_baixo(struct refeicao* topo, struct pedido* comeco, int* pontos, in
 		return 1;
 
 	} else if ((elementos_mapa.chapeiro.lin + 1 == elementos_mapa.entrega.lin) && (elementos_mapa.chapeiro.col == elementos_mapa.entrega.col)){
-		if (verifica_pedido(topo, comeco) == 1){
+		if (verifica_pedido(topo, comeco/*, cardapio*/) == 1){
 				(*pontos) += 10;
 		} else {
 			(*pedidos_errados)++;
@@ -350,7 +375,7 @@ int verifica_cima(struct refeicao* topo, struct pedido* comeco, int* pontos, int
 		return 1;
 
 	} else if ((elementos_mapa.chapeiro.lin - 1 == elementos_mapa.entrega.lin) && (elementos_mapa.chapeiro.col == elementos_mapa.entrega.col)){
-		if (verifica_pedido(topo, comeco) == 1){
+		if (verifica_pedido(topo, comeco/*, cardapio*/) == 1){
 				(*pontos) += 10;
 		} else {
 			(*pedidos_errados)++;
@@ -496,3 +521,7 @@ void imprime_mapa(){
 	mvprintw(2, 2, "[R]");
 	refresh();
 }
+
+
+
+

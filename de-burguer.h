@@ -5,6 +5,14 @@
 #define Vegetariano 4
 #define Vegano 5
 
+#define Hamburguer 0
+#define Pao_cima 1
+#define Pao_baixo 2
+#define Queijo 3
+#define Salada 4
+#define Fritas 5
+#define Refrigerante 6
+
 struct estacao{
 	char simbolo[3];
 	int lin, col[3];
@@ -21,26 +29,38 @@ struct locais{
 	struct estacao hamburguer, pao_cima, pao_baixo, queijo, salada, fritas, refrigerante;
 };
 
-struct pedido{
+struct pedido{ //fila de pedidos
 	int cliente;
 	int num_refeicao;
 	struct pedido* prox;
 	struct pedido* anterior;
 };
 
-struct refeicao{
+struct refeicao{ //pilha de refeicoes
 	char ingrediente;
 	struct refeicao* anterior;
 };
 
-char* cardapio[] = {  //define as refeicoes que serao util para checar o lanche e imprimi-lo na tela 
+/*char* ingrediente[] = { //define os ingredientes que serao utilizados para checar o lanche e imprimi-lo na tela
+	[Hamburguer] = "H",
+	[Pao_cima] = "P",
+	[Pao_baixo] = "p",
+	[Queijo] = "Q",
+	[Salada] = "S",
+	[Fritas] = "F",
+	[Refrigerante] = "R"
+};*/
+
+/*char* cardapio[] = {  //define as refeicoes que serao util para checar o lanche e imprimi-lo na tela 
 	[X_Burguer] = "pHQP",
 	[X_Salada] = "pHSP",
 	[Combo_1] = "pHQPFR",
 	[Combo_2] = "pHSPFR",
 	[Vegetariano] = "pQPFR",
 	[Vegano] = "SFR"
-};
+};*/
+
+void inicializa_ncurses();
 
 void inicializa_fila(struct pedido* comeco, struct pedido* fim, int* num_clientes);
 

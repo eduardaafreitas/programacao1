@@ -8,11 +8,67 @@
 // animacao inicial.
 
 
+
+t_queue *verificaPedido(t_queue *clientes, t_pilha *burger, int *vidas, int *pontos) {
+
+    t_queue *aux, *cliente;
+    t_pilha *auxb;
+  
+    char icli, ibur;
+    int flag=0;
+
+    auxb = burger;
+    aux = clientes;
+    cliente = aux;
+
+    FILE *p;
+    p = fopen("teste.txt", "a");
+
+    // testar o tamanho0
+    if(auxb->topo != cliente->burg->topo){
+        flag=1;
+    }else{
+        // testar os ingredientes
+        for (int i = burger->topo; i >= 0; i--) {
+            pop(cliente->burg, &icli);
+            pop(auxb, &ibur);
+            if(icli!=ibur){
+                flag = 1;
+                
+            }
+            fprintf(p, "[%c] [%c]\n", ibur,icli);
+        }
+    }
+    
+    if(flag == 1){
+        (*vidas)--;
+        mvprintw (13, 3, "VIDAS: %d", *vidas);
+        clientes = dequeue(aux);
+        destroiRefeicao(burger);
+    } else {
+        clientes = dequeue(aux);
+        *pontos = *pontos + 100;
+    }
+
+    fclose(p);
+    return clientes;
+}
+
+
+
+
+
+
+
+
+
+
+
 void inicializa_ncurses(){
     initscr();            //inicializa a tela
     raw();                //desabilita o buffer
     noecho();             //nao mostra os caracteres digitados
-    curs_set(FALSE);      //no mostra o cursor na tela 
+    curs_set(FALSE);      //não mostra o cursor na tela 
     keypad(stdscr, TRUE); //habilita leitura de setas 
     //cores??
 }
