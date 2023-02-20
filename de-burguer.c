@@ -93,7 +93,7 @@ void destroi_refeicao(struct refeicao* topo){
 }
 
 
-int verifica_pedido(struct refeicao* topo, struct pedido* comeco){
+/*int verifica_pedido(struct refeicao* topo, struct pedido* comeco){
 	//int i = 0;
 	//enquanto o ingrediente no cardapio eh o mesmo no lanche, e nenhum dos dois chegou ao fim
 	//pedidoatual = *num_refeicao;
@@ -104,7 +104,7 @@ int verifica_pedido(struct refeicao* topo, struct pedido* comeco){
 	else
 		return 0;
 }
-	/*else{
+	else{
 		while(((topo->ingrediente) != (*(cardapio[comeco->num_refeicao]))) &&(i <= strlen(cardapio[comeco->num_refeicao])) - 1){
 			i++;
 			pop(topo);
@@ -374,7 +374,7 @@ int verifica_cima(struct refeicao* topo, struct pedido* comeco, int* pontos, int
 		return 1;
 
 	} else if ((elementos_mapa.chapeiro.lin - 1 == elementos_mapa.entrega.lin) && (elementos_mapa.chapeiro.col == elementos_mapa.entrega.col)){
-		if (verifica_pedido(topo, comeco/*, cardapio*/) == 1){
+		if (verifica_pedido(topo, comeco) == 1){
 				(*pontos) += 10;
 		} else {
 			(*pedidos_errados)++;
@@ -500,8 +500,13 @@ void imprime_pilha(struct refeicao* topo){
 	free(aux);
 }
 
-void imprime_mapa(struct locais* elementos_mapa, struct refeicao* topo){
+void pontuacao(int* pontos){
+    mvprintw(10, 0, "PONTOS: %d", (*pontos));
+}
+
+void imprime_tela(struct locais* elementos_mapa, struct refeicao* topo, int* pontos){
 	imprime_pilha(topo);
+	pontuacao(pontos);
 
 	int i;
 	//imprime parede esquerda

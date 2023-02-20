@@ -7,8 +7,6 @@
 
 // animacao inicial.
 
-
-
 t_queue *verificaPedido(t_queue *clientes, t_pilha *burger, int *vidas, int *pontos) {
 
     t_queue *aux, *cliente;
@@ -70,11 +68,6 @@ void regras(){
         printw("Bem vindo ao jogo De-Burguer!\n");
 	//completar
     }
-}
-
-void pontuacao(int* pontos){
-    //escolher onde vai ficar e as cores (declara elas com attron)
-    printw("PONTOS: %d", (*pontos));
 }
 
 void game_over(){

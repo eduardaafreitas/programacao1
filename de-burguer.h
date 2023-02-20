@@ -94,4 +94,6 @@ void inicializa_elem_mapa(struct locais* elementos_mapa);
 
 void imprime_pilha(struct refeicao* topo);
 
-void imprime_mapa(struct locais* elementos_mapa, struct refeicao* topo);
+void pontuacao(int* pontos);
+
+void imprime_tela(struct locais* elementos_mapa, struct refeicao* topo, int* pontos);

@@ -11,7 +11,7 @@ int main(){
 	struct pedido* fim = NULL;
 	inicializa_fila(comeco, fim, &num_clientes);
 	inicializa_elem_mapa(&elementos_mapa);
-	imprime_mapa(&elementos_mapa, topo);
+	imprime_tela(&elementos_mapa, topo, &pontos);
 	inicializa_ncurses();
 	int movimento = getch();
 
@@ -45,7 +45,7 @@ int main(){
 				}
 			} break;
 		}
-		imprime_mapa(&elementos_mapa, topo);
+		imprime_tela(&elementos_mapa, topo, &pontos);
 
 		if ((pedidos_errados == 3) || (uso_lixeira == 5)){ //checa se eh game over
 				//game_over();
