@@ -19,7 +19,7 @@ struct estacao{
 	char ingrediente;
 };
 
-struct elem_mapa{ //mudar nome
+struct elem_mapa{ 
 	char simbolo;
 	int lin, col;
 };
@@ -36,9 +36,18 @@ struct pedido{ //fila de pedidos
 	struct pedido* anterior;
 };
 
-struct refeicao{ //pilha de refeicoes
+struct fila_clientes{ //ponteiros da fila
+	struct pedido* fim;
+	struct pedido* comeco;
+};
+
+struct ingredientes{ //struct dos ingredientes que compoem a pilha de ingredientes
 	char ingrediente;
-	struct refeicao* anterior;
+	struct ingredientes* anterior;
+};
+
+struct pilha{	//struct da pilha que compoe a ingredientes
+	struct ingredientes* topo;
 };
 
 /*char* ingrediente[] = { //define os ingredientes que serao utilizados para checar o lanche e imprimi-lo na tela
@@ -62,38 +71,38 @@ struct refeicao{ //pilha de refeicoes
 
 void inicializa_ncurses();
 
-void inicializa_fila(struct pedido* comeco, struct pedido* fim, int* num_clientes);
-
-int fila_vazia(struct pedido* comeco, struct pedido* fim);
-
 struct pedido* cria_pedido(int* num_clientes);
 
-void insere_fim(struct pedido* comeco, struct pedido* fim, int* num_clientes);
+int fila_vazia(struct fila_clientes* fila);
 
-void retira_comeco(struct pedido* comeco);
+void insere_fim(struct fila_clientes* fila, int* num_clientes);
 
-struct refeicao* novo_ingrediente(char ingrediente);
+struct fila_clientes* inicializa_fila(int* num_clientes);
 
-void push(struct refeicao* topo, char ingrediente);
+void retira_comeco(struct fila_clientes* fila);
 
-void pop(struct refeicao* topo);
+struct pilha* inicializa_pilha();
 
-void destroi_refeicao(struct refeicao* topo);
+void push(struct pilha* refeicao, char ingrediente);
 
-int verifica_pedido(struct refeicao* topo, struct pedido* comeco);
+void pop(struct pilha* refeicao);
 
-int verifica_direita(struct refeicao* topo, struct pedido* comeco, int* pontos, int* pedidos_errados, int* uso_lixeira, struct locais elementos_mapa);
+void destroi_refeicao(struct pilha* refeicao);
 
-int verifica_esquerda(struct refeicao* topo, struct pedido* comeco, int* pontos, int* pedidos_errados, int* uso_lixeira, struct locais elementos_mapa);
+void imprime_refeicao(struct pilha* refeicao);
 
-int verifica_baixo(struct refeicao* topo, struct pedido* comeco, int* pontos, int* pedidos_errados, int* uso_lixeira, struct locais elementos_mapa);
+//int verifica_pedido(struct pilha* refeicao, struct fila_clientes* fila);
 
-int verifica_cima(struct refeicao* topo, struct pedido* comeco, int* pontos, int* pedidos_errados, int* uso_lixeira, struct locais elementos_mapa);
+int verifica_direita(struct pilha* refeicao, struct fila_clientes* fila, int* pontos, int* pedidos_errados, int* uso_lixeira, struct locais elementos_mapa);
+
+int verifica_esquerda(struct pilha* refeicao, struct fila_clientes* fila, int* pontos, int* pedidos_errados, int* uso_lixeira, struct locais elementos_mapa);
+
+int verifica_baixo(struct pilha* refeicao, struct fila_clientes* fila, int* pontos, int* pedidos_errados, int* uso_lixeira, struct locais elementos_mapa);
+
+int verifica_cima(struct pilha* refeicao, struct fila_clientes* fila, int* pontos, int* pedidos_errados, int* uso_lixeira, struct locais elementos_mapa);
 
 void inicializa_elem_mapa(struct locais* elementos_mapa);
 
-void imprime_pilha(struct refeicao* topo);
-
 void pontuacao(int* pontos);
 
-void imprime_tela(struct locais* elementos_mapa, struct refeicao* topo, int* pontos);
+void imprime_tela(struct locais* elementos_mapa, struct pilha* refeicao, int* pontos);
