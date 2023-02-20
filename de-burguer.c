@@ -90,16 +90,19 @@ void imprime_pedido(char* cardapio[], struct fila_clientes* fila){
 }
 
 int verifica_pedido(char* cardapio[], struct fila_clientes* fila, struct pilha* refeicao){
-	int i = 0;
+
 	if(refeicao->topo != NULL){
+		int i = 0;
+		struct ingredientes* aux = refeicao->topo;
+
 		//enquanto o ingrediente no cardapio eh o mesmo no lanche, e nenhum dos dois chegou ao fim
-		while ((refeicao->topo != NULL) && (i <= strlen(cardapio[fila->comeco->num_refeicao]) - 1) && 
-					(cardapio[fila->comeco->num_refeicao][i] == refeicao->topo->ingrediente)){
+		while ((aux != NULL) && (i < strlen(cardapio[fila->comeco->num_refeicao])) && 
+					(cardapio[fila->comeco->num_refeicao][i] == aux->ingrediente)){
 			i++;
-			pop(refeicao);
+			aux = aux->anterior;
 		}
 		//se ambos chegaram ao fim, sao iguais
-		if ((refeicao->topo == NULL) && (i == strlen(cardapio[fila->comeco->num_refeicao] - 1)))
+		if ((aux == NULL) && (i == strlen(cardapio[fila->comeco->num_refeicao])))
 			return 1;
 	}
 	return 0;
