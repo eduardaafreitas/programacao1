@@ -54,16 +54,6 @@ t_queue *verificaPedido(t_queue *clientes, t_pilha *burger, int *vidas, int *pon
     return clientes;
 }
 
-
-
-
-
-
-
-
-
-
-
 void inicializa_ncurses(){
     initscr();            //inicializa a tela
     raw();                //desabilita o buffer
@@ -104,12 +94,3 @@ int imprime_pedidos(struct pedido* comeco){ //imprime os cinco primeiros pedidos
 	}
 }
 
-void escreve_pilha(struct refeicao* topo){
-	struct refeicao* aux = topo;
-
-	while (aux != NULL){
-		printf("%d ", aux->ingrediente);
-
-		aux = aux->anterior;
-	}
-}

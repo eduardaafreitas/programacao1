@@ -92,4 +92,6 @@ int verifica_cima(struct refeicao* topo, struct pedido* comeco, int* pontos, int
 
 void inicializa_elem_mapa(struct locais* elementos_mapa);
 
-void imprime_mapa();
+void imprime_pilha(struct refeicao* topo);
+
+void imprime_mapa(struct locais* elementos_mapa, struct refeicao* topo);
