@@ -13,7 +13,7 @@ int main(){
 	inicializa_ncurses();
 	int movimento = getch();
 
-	while (pontos <= 80){ //cada pedido vale 10 pontos, sendo 8 pedidos (num_clientes) o maximo
+	while ((pontos <= 80) || (movimento != KEY_F(1))){ //cada pedido vale 10 pontos, sendo 8 pedidos (num_clientes) o maximo
 		switch (movimento){
 			case KEY_RIGHT:{
 				if (verifica_direita(refeicao, fila, &pontos, &pedidos_errados, &uso_lixeira, elementos_mapa) == 0){
@@ -37,6 +37,11 @@ int main(){
 				if (verifica_cima(refeicao, fila, &pontos, &pedidos_errados, &uso_lixeira, elementos_mapa) == 0){
 					elementos_mapa.chapeiro.lin--;
 				}
+			} break;
+
+			case 0:{
+				endwin();
+				return 0;
 			} break;
 		}
 		imprime_tela(&elementos_mapa, refeicao, &pontos);

@@ -5,13 +5,13 @@
 #define Vegetariano 4
 #define Vegano 5
 
-#define Hamburguer 0
+/*#define Hamburguer 0
 #define Pao_cima 1
 #define Pao_baixo 2
 #define Queijo 3
 #define Salada 4
 #define Fritas 5
-#define Refrigerante 6
+#define Refrigerante 6*/
 
 struct estacao{
 	char simbolo[3];
@@ -49,6 +49,8 @@ struct ingredientes{ //struct dos ingredientes que compoem a pilha de ingredient
 struct pilha{	//struct da pilha que compoe a ingredientes
 	struct ingredientes* topo;
 };
+
+
 
 /*char* ingrediente[] = { //define os ingredientes que serao utilizados para checar o lanche e imprimi-lo na tela
 	[Hamburguer] = "H",

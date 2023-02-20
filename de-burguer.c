@@ -6,11 +6,42 @@
 
 void inicializa_ncurses(){
     initscr();            //inicializa a tela
+	//verifica_cores();	  //verifica se o terminal suporta cores
     raw();                //desabilita o buffer
     noecho();             //nao mostra os caracteres digitados
     curs_set(FALSE);      //não mostra o cursor na tela 
     keypad(stdscr, TRUE); //habilita leitura de setas 
     //cores??
+	start_color();		  //habilita cores
+	init_pair(1, COLOR_RED, COLOR_BLACK);
+	init_pair(2, COLOR_GREEN, COLOR_BLACK);
+	init_pair(3, COLOR_YELLOW, COLOR_BLACK);
+	init_pair(4, COLOR_BLUE, COLOR_BLACK);
+	init_pair(5, COLOR_MAGENTA, COLOR_BLACK);
+	init_pair(6, COLOR_CYAN, COLOR_BLACK);
+	init_pair(7, COLOR_WHITE, COLOR_BLACK);
+}
+
+int *verifica_pedido(struct pilha* refeicao, struct fila_clientes* fila){
+    int num_cardapio;
+    int flag = 0;
+    num_cardapio = fila->comeco->num_refeicao;
+
+	char* cardapio[] = { //define as refeicoes que serao util para checar o lanche e imprimi-lo na tela 
+		[X_Burguer] = "pHQP",
+		[X_Salada] = "pHSP",
+		[Combo_1] = "pHQPFR",
+		[Combo_2] = "pHSPFR",
+		[Vegetariano] = "pQPFR",
+		[Vegano] = "SFR"
+	};
+
+    for (int i = 0; i < strlen(cardapio[num_cardapio]); i++){
+        if (refeicao->topo->ingrediente != cardapio[num_cardapio]){
+            flag = 1;
+        }
+    }
+
 }
 
 struct pedido* cria_pedido(int* num_clientes){
@@ -117,36 +148,6 @@ void imprime_refeicao(struct pilha* refeicao){
 	free(aux);
 }
 
-/*int verifica_pedido(struct pilha* refeicao, struct fila_clientes* fila){
-	//int i = 0;
-	//enquanto o ingrediente no cardapio eh o mesmo no lanche, e nenhum dos dois chegou ao fim
-	//pedidoatual = *num_refeicao;
-
-	printf( "%d: indice \n" , comeco->num_refeicao);
-	if(refeicao->topo == NULL)
-		return 1;
-	else
-		return 0;
-}
-	else{
-		while(((refeicao->topo->ingrediente) != (*(cardapio[comeco->num_refeicao]))) &&(i <= strlen(cardapio[comeco->num_refeicao])) - 1){
-			i++;
-			pop(refeicao->topo);
-		}
-			return 0;
-	}
-
-//	while ((refeicao->topo != NULL) && ((cardapio[comeco->num_refeicao]) == refeicao->topo->ingrediente)
-//				 && (i <= strlen(cardapio[comeco->num_refeicao])) - 1){
-//		i++;
-//		pop(refeicao->topo);
-//	}
-
-	//se ambos chegaram ao fim, sao iguais
-	if ((refeicao->topo == NULL) && (i == strlen(cardapio[comeco->num_refeicao] - 1)))
-		return 1;
-	return 0;*/
-
 
 int verifica_direita(struct pilha* refeicao, struct fila_clientes* fila, int* pontos, int* pedidos_errados, int* uso_lixeira, struct locais elementos_mapa){
 //verifica se o personagem esta tentando "subir" em uma estacao, se sim, faz o que ela pede e retorna o inteiro 1, se nao retorna 0
@@ -198,13 +199,13 @@ int verifica_direita(struct pilha* refeicao, struct fila_clientes* fila, int* po
 		return 1;
 
 	} else if ((elementos_mapa.chapeiro.lin == elementos_mapa.entrega.lin) && (elementos_mapa.chapeiro.col + 1 == elementos_mapa.entrega.col)){
-		/*if (verifica_pedido(refeicao, comeco/*, cardapio) == 1){
+		if (*verifica_pedido(refeicao, fila) == 1){
 				(*pontos) += 10;
 		} else {
 			(*pedidos_errados)++;
 		}
 
-		destroi_refeicao(refeicao);*/
+		destroi_refeicao(refeicao);
 		return 1;
 	
 	} else if (elementos_mapa.chapeiro.col + 1 >= elementos_mapa.parede_direita.col){  
@@ -265,13 +266,13 @@ int verifica_esquerda(struct pilha* refeicao, struct fila_clientes* fila, int* p
 		return 1;
 
 	} else if ((elementos_mapa.chapeiro.lin == elementos_mapa.entrega.lin) && (elementos_mapa.chapeiro.col - 1 == elementos_mapa.entrega.col)){
-		/*if (verifica_pedido(refeicao, comeco/*, cardapio) == 1){
+		if (*verifica_pedido(refeicao, fila) == 1){
 				(*pontos) += 10;
 		} else {
 			(*pedidos_errados)++;
 		}
 
-		destroi_refeicao(refeicao);*/
+		destroi_refeicao(refeicao);
 		return 1;
 	
 	} else if (elementos_mapa.chapeiro.col - 1 <= 0){  
@@ -331,13 +332,13 @@ int verifica_baixo(struct pilha* refeicao, struct fila_clientes* fila, int* pont
 		return 1;
 
 	} else if ((elementos_mapa.chapeiro.lin + 1 == elementos_mapa.entrega.lin) && (elementos_mapa.chapeiro.col == elementos_mapa.entrega.col)){
-		/*if (verifica_pedido(refeicao, comeco, cardapio) == 1){
+		if (*verifica_pedido(refeicao, fila) == 1){
 				(*pontos) += 10;
 		} else {
 			(*pedidos_errados)++;
 		}
 
-		destroi_refeicao(refeicao);*/
+		destroi_refeicao(refeicao);
 		return 1;
 	
 	} else if (elementos_mapa.chapeiro.lin + 1 >= elementos_mapa.parede_baixo.lin){  
@@ -398,13 +399,13 @@ int verifica_cima(struct pilha* refeicao, struct fila_clientes* fila, int* ponto
 		return 1;
 
 	} else if ((elementos_mapa.chapeiro.lin - 1 == elementos_mapa.entrega.lin) && (elementos_mapa.chapeiro.col == elementos_mapa.entrega.col)){
-		/*if (verifica_pedido(refeicao, comeco) == 1){
+		if (*verifica_pedido(refeicao, fila) == 1){
 				(*pontos) += 10;
 		} else {
 			(*pedidos_errados)++;
 		}
 
-		destroi_refeicao(refeicao);*/
+		destroi_refeicao(refeicao);
 		return 1;
 	
 	} else if ((elementos_mapa.chapeiro.lin - 1 <= 0) && (elementos_mapa.chapeiro.col != elementos_mapa.entrega.col)){  

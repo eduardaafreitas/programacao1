@@ -3,7 +3,7 @@
 #include <ncurses.h>
 #include "de-burguer.h"
 
-//esse arquivo possui as funoces que ainda estao sendo escritas!
+//esse arquivo possui as funcoes que ainda estao sendo escritas!
 
 // animacao inicial.
 
@@ -51,6 +51,24 @@ t_queue *verificaPedido(t_queue *clientes, t_pilha *burger, int *vidas, int *pon
     fclose(p);
     return clientes;
 }
+
+
+
+int *verifica_pedido(char* cardapio[], struct pilha* refeicao, struct fila_clientes* fila){
+    int num_cardapio;
+    int flag = 0;
+    num_cardapio = comeco->num_refeicao;
+
+    for (int i = 0; i < strlen(cardapio[num_cardapio]); i++){
+        if (refeicao->topo->ingrediente != cardapio[num_cardapio]){
+            flag = 1;
+        }
+    }
+
+}
+
+
+
 
 void inicializa_ncurses(){
     initscr();            //inicializa a tela
