@@ -4,7 +4,7 @@
 #include "de-burguer.h"
 
 int main(){
-	int pontos = 0, pedidos_errados = 0, uso_lixeira = 0, num_clientes = 3; 
+	int pontos = 0, pedidos_errados = 0, uso_lixeira = 0, num_clientes = 0; 
 	struct locais elementos_mapa;
 	struct refeicao* topo = NULL;
 	struct pedido* comeco = NULL;
