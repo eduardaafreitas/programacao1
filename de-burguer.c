@@ -11,7 +11,6 @@ void inicializa_ncurses(){
     noecho();             //nao mostra os caracteres digitados
     curs_set(FALSE);      //não mostra o cursor na tela 
     keypad(stdscr, TRUE); //habilita leitura de setas 
-    //cores??
 	start_color();		  //habilita cores
 	init_pair(1, COLOR_RED, COLOR_BLACK);
 	init_pair(2, COLOR_GREEN, COLOR_BLACK);
@@ -22,26 +21,88 @@ void inicializa_ncurses(){
 	init_pair(7, COLOR_WHITE, COLOR_BLACK);
 }
 
-int *verifica_pedido(struct pilha* refeicao, struct fila_clientes* fila){
-    int num_cardapio;
-    int flag = 0;
-    num_cardapio = fila->comeco->num_refeicao;
+void inicializa_cardapio(char* cardapio[]){
+	//aloca memoria para os vetores de cada refeicao
+	cardapio[X_Burguer] = malloc(sizeof(char)*4);
+	cardapio[X_Salada] = malloc(sizeof(char)*4);
+	cardapio[Combo_1] = malloc(sizeof(char)*6);
+	cardapio[Combo_2] = malloc(sizeof(char)*6);
+	cardapio[Vegetariano] = malloc(sizeof(char)*5);
+	cardapio[Vegano] = malloc(sizeof(char)*3);
 
-	char* cardapio[] = { //define as refeicoes que serao util para checar o lanche e imprimi-lo na tela 
-		[X_Burguer] = "pHQP",
-		[X_Salada] = "pHSP",
-		[Combo_1] = "pHQPFR",
-		[Combo_2] = "pHSPFR",
-		[Vegetariano] = "pQPFR",
-		[Vegano] = "SFR"
-	};
+	//atribui as receitas
+	cardapio[X_Burguer] = "pHQP";
+	cardapio[X_Salada] = "pHSP";
+	cardapio[Combo_1] = "pHQPFR";
+	cardapio[Combo_2] = "pHSPFR";
+	cardapio[Vegetariano] = "pQPFR";
+	cardapio[Vegano] = "SFR";
+}
 
-    for (int i = 0; i < strlen(cardapio[num_cardapio]); i++){
-        if (refeicao->topo->ingrediente != cardapio[num_cardapio]){
-            flag = 1;
-        }
-    }
+void imprime_pedido(char* cardapio[], struct fila_clientes* fila){
+	//imprime os primeiros 5 pedidos da fila 
+	struct pedido* aux = fila->comeco;
+	int col = 50, cont = 1, pedido, lin = 1;
 
+	mvprintw(0, 50, "Pedidos na fila:");
+
+	while (cont <= 5){
+		pedido = aux->num_refeicao;
+
+		switch(pedido){
+			case 0:{
+				for(int i = 0; i <= strlen(cardapio[aux->num_refeicao]) - 1; i++, col += 4)
+					mvprintw(lin, col, "[%c] ", cardapio[0][i]);
+			} break;
+
+			case 1:{
+				for(int i = 0; i <= strlen(cardapio[aux->num_refeicao]) - 1; i++, col += 4)
+					mvprintw(lin, col, "[%c] ", cardapio[1][i]);
+			} break;
+
+			case 2:{
+				for(int i = 0; i <= strlen(cardapio[aux->num_refeicao]) - 1; i++, col += 4)
+					mvprintw(lin, col, "[%c] ", cardapio[2][i]);
+			} break;
+			
+			case 3:{
+				for(int i = 0; i <= strlen(cardapio[aux->num_refeicao]) - 1; i++, col += 4)
+					mvprintw(lin, col, "[%c] ", cardapio[3][i]);
+			} break;
+
+			case 4:{
+				for(int i = 0; i <= strlen(cardapio[aux->num_refeicao]) - 1; i++, col += 4)
+					mvprintw(lin, col, "[%c] ", cardapio[4][i]);
+			} break;
+			
+			case 5:{
+				for(int i = 0; i <= strlen(cardapio[aux->num_refeicao]) - 1; i++, col += 4)
+					mvprintw(lin, col, "[%c] ", cardapio[5][i]);
+			} break;
+		}
+
+		lin ++;
+		cont++;
+		col = 50;
+		if (aux->prox != NULL)
+			aux = aux->prox;
+	}
+}
+
+int verifica_pedido(char* cardapio[], struct fila_clientes* fila, struct pilha* refeicao){
+	int i = 0;
+	if(refeicao->topo != NULL){
+		//enquanto o ingrediente no cardapio eh o mesmo no lanche, e nenhum dos dois chegou ao fim
+		while ((refeicao->topo != NULL) && (i <= strlen(cardapio[fila->comeco->num_refeicao]) - 1) && 
+					(cardapio[fila->comeco->num_refeicao][i] == refeicao->topo->ingrediente)){
+			i++;
+			pop(refeicao);
+		}
+		//se ambos chegaram ao fim, sao iguais
+		if ((refeicao->topo == NULL) && (i == strlen(cardapio[fila->comeco->num_refeicao] - 1)))
+			return 1;
+	}
+	return 0;
 }
 
 struct pedido* cria_pedido(int* num_clientes){
@@ -149,7 +210,7 @@ void imprime_refeicao(struct pilha* refeicao){
 }
 
 
-int verifica_direita(struct pilha* refeicao, struct fila_clientes* fila, int* pontos, int* pedidos_errados, int* uso_lixeira, struct locais elementos_mapa){
+int verifica_direita(struct pilha* refeicao, struct fila_clientes* fila, int* pontos, int* pedidos_errados, int* uso_lixeira, struct locais elementos_mapa, char* cardapio[]){
 //verifica se o personagem esta tentando "subir" em uma estacao, se sim, faz o que ela pede e retorna o inteiro 1, se nao retorna 0
 
 	if ((elementos_mapa.chapeiro.lin == elementos_mapa.hamburguer.lin) && ((elementos_mapa.chapeiro.col + 1 == elementos_mapa.hamburguer.col[0]) 
@@ -199,8 +260,9 @@ int verifica_direita(struct pilha* refeicao, struct fila_clientes* fila, int* po
 		return 1;
 
 	} else if ((elementos_mapa.chapeiro.lin == elementos_mapa.entrega.lin) && (elementos_mapa.chapeiro.col + 1 == elementos_mapa.entrega.col)){
-		if (*verifica_pedido(refeicao, fila) == 1){
+		if (verifica_pedido(cardapio, fila, refeicao) == 1){
 				(*pontos) += 10;
+				retira_comeco(fila);
 		} else {
 			(*pedidos_errados)++;
 		}
@@ -215,7 +277,7 @@ int verifica_direita(struct pilha* refeicao, struct fila_clientes* fila, int* po
 	return 0;
 }
 
-int verifica_esquerda(struct pilha* refeicao, struct fila_clientes* fila, int* pontos, int* pedidos_errados, int* uso_lixeira, struct locais elementos_mapa){
+int verifica_esquerda(struct pilha* refeicao, struct fila_clientes* fila, int* pontos, int* pedidos_errados, int* uso_lixeira, struct locais elementos_mapa, char* cardapio[]){
 //verifica se o personagem esta tentando "subir" em uma estacao, se sim, faz o que ela pede e retorna o inteiro 1, se nao retorna 0
 
 	if ((elementos_mapa.chapeiro.lin == elementos_mapa.hamburguer.lin) && ((elementos_mapa.chapeiro.col - 1 == elementos_mapa.hamburguer.col[0]) 
@@ -266,8 +328,9 @@ int verifica_esquerda(struct pilha* refeicao, struct fila_clientes* fila, int* p
 		return 1;
 
 	} else if ((elementos_mapa.chapeiro.lin == elementos_mapa.entrega.lin) && (elementos_mapa.chapeiro.col - 1 == elementos_mapa.entrega.col)){
-		if (*verifica_pedido(refeicao, fila) == 1){
+		if (verifica_pedido(cardapio, fila, refeicao) == 1){
 				(*pontos) += 10;
+				retira_comeco(fila);
 		} else {
 			(*pedidos_errados)++;
 		}
@@ -282,7 +345,7 @@ int verifica_esquerda(struct pilha* refeicao, struct fila_clientes* fila, int* p
 	return 0;
 }
 
-int verifica_baixo(struct pilha* refeicao, struct fila_clientes* fila, int* pontos, int* pedidos_errados, int* uso_lixeira, struct locais elementos_mapa){
+int verifica_baixo(struct pilha* refeicao, struct fila_clientes* fila, int* pontos, int* pedidos_errados, int* uso_lixeira, struct locais elementos_mapa, char* cardapio[]){
 //verifica se o personagem esta tentando "subir" em uma estacao, se sim, faz o que ela pede e retorna o inteiro 1, se nao retorna 0
 
 	if ((elementos_mapa.chapeiro.lin + 1 == elementos_mapa.hamburguer.lin) && ((elementos_mapa.chapeiro.col == elementos_mapa.hamburguer.col[0]) 
@@ -332,8 +395,9 @@ int verifica_baixo(struct pilha* refeicao, struct fila_clientes* fila, int* pont
 		return 1;
 
 	} else if ((elementos_mapa.chapeiro.lin + 1 == elementos_mapa.entrega.lin) && (elementos_mapa.chapeiro.col == elementos_mapa.entrega.col)){
-		if (*verifica_pedido(refeicao, fila) == 1){
+		if (verifica_pedido(cardapio, fila, refeicao) == 1){
 				(*pontos) += 10;
+				retira_comeco(fila);
 		} else {
 			(*pedidos_errados)++;
 		}
@@ -348,7 +412,7 @@ int verifica_baixo(struct pilha* refeicao, struct fila_clientes* fila, int* pont
 	return 0;
 }
 
-int verifica_cima(struct pilha* refeicao, struct fila_clientes* fila, int* pontos, int* pedidos_errados, int* uso_lixeira, struct locais elementos_mapa){
+int verifica_cima(struct pilha* refeicao, struct fila_clientes* fila, int* pontos, int* pedidos_errados, int* uso_lixeira, struct locais elementos_mapa, char* cardapio[]){
 //verifica se o personagem esta tentando "subir" em uma estacao, se sim, faz o que ela pede e retorna o inteiro 1, se nao retorna 0
 
 	if ((elementos_mapa.chapeiro.lin - 1 == elementos_mapa.hamburguer.lin) && ((elementos_mapa.chapeiro.col == elementos_mapa.hamburguer.col[0]) 
@@ -399,8 +463,9 @@ int verifica_cima(struct pilha* refeicao, struct fila_clientes* fila, int* ponto
 		return 1;
 
 	} else if ((elementos_mapa.chapeiro.lin - 1 == elementos_mapa.entrega.lin) && (elementos_mapa.chapeiro.col == elementos_mapa.entrega.col)){
-		if (*verifica_pedido(refeicao, fila) == 1){
+		if (verifica_pedido(cardapio, fila, refeicao) == 1){
 				(*pontos) += 10;
+				retira_comeco(fila);
 		} else {
 			(*pedidos_errados)++;
 		}
@@ -514,16 +579,17 @@ void pontuacao(int* pontos){
     mvprintw(10, 0, "PONTOS: %d", (*pontos));
 }
 
-void imprime_tela(struct locais* elementos_mapa, struct pilha* refeicao, int* pontos){
+void imprime_tela(char* cardapio[], struct fila_clientes* fila, struct locais* elementos_mapa, struct pilha* refeicao, int* pontos){
 	//limpa tela
-	for (int i = 0; i < 50; i++){
-		for (int j = 0; j < 50; j++){
+	for (int i = 0; i < 80; i++){
+		for (int j = 0; j < 80; j++){
 			mvprintw(i, j, " ");
 		}
 	}
 
 	imprime_refeicao(refeicao);
 	pontuacao(pontos);
+	imprime_pedido(cardapio, fila);
 
 	int i;
 	//imprime parede esquerda
