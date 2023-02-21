@@ -343,7 +343,7 @@ int verifica_direita(struct pilha* refeicao, struct fila_clientes* fila, int* po
 		return 1;
 
 	} else if ((elementos_mapa.chapeiro.lin == elementos_mapa.lixeira.lin) && (elementos_mapa.chapeiro.col + 1 == elementos_mapa.lixeira.col)){
-		uso_lixeira++;
+		(*uso_lixeira)++;
 		destroi_refeicao(refeicao);
 		return 1;
 
@@ -411,7 +411,7 @@ int verifica_esquerda(struct pilha* refeicao, struct fila_clientes* fila, int* p
 		return 1;
 
 	} else if ((elementos_mapa.chapeiro.lin == elementos_mapa.lixeira.lin) && (elementos_mapa.chapeiro.col - 1 == elementos_mapa.lixeira.col)){
-		uso_lixeira++;
+		(*uso_lixeira)++;
 		destroi_refeicao(refeicao);
 		return 1;
 
@@ -478,7 +478,7 @@ int verifica_baixo(struct pilha* refeicao, struct fila_clientes* fila, int* pont
 		return 1;
 
 	} else if ((elementos_mapa.chapeiro.lin + 1 == elementos_mapa.lixeira.lin) && (elementos_mapa.chapeiro.col == elementos_mapa.lixeira.col)){
-		uso_lixeira++;
+		(*uso_lixeira)++;
 		destroi_refeicao(refeicao);
 		return 1;
 
@@ -546,7 +546,7 @@ int verifica_cima(struct pilha* refeicao, struct fila_clientes* fila, int* ponto
 		return 1;
 
 	} else if ((elementos_mapa.chapeiro.lin - 1 == elementos_mapa.lixeira.lin) && (elementos_mapa.chapeiro.col == elementos_mapa.lixeira.col)){
-		uso_lixeira++;
+		(*uso_lixeira)++;
 		destroi_refeicao(refeicao);
 		return 1;
 
@@ -743,20 +743,6 @@ void imprime_tela(char* cardapio[], struct fila_clientes* fila, struct locais* e
 	refresh();
 }
 
-void game_over(){
-    clear();
-	printw(" _______  _______  __   __  _______        _______  __   __  _______  ______      ___      ____  \n");
-	printw("|       ||   _   ||  |_|  ||       |      |       ||  | |  ||       ||    _ |    |   |    |    | \n");
-	printw("|    ___||  |_|  ||       ||    ___|      |   _   ||  |_|  ||    ___||   | ||    |___|   |    _| \n");
-	printw("|   | __ |       ||       ||   |___       |  | |  ||       ||   |___ |   |_||_    ___    |   |   \n");
-	printw("|   ||  ||       ||       ||    ___|      |  |_|  ||       ||    ___||    __  |  |   |   |   |   \n");
-	printw("|   |_| ||   _   || ||_|| ||   |___       |       | |     | |   |___ |   |  | |  |___|   |   |_  \n");
-	printw("|_______||__| |__||_|   |_||_______|      |_______|  |___|  |_______||___|  |_|           |____| \n\n");
-    printw("                          Pressione qualquer tecla para sair");
-    getch();
-    endwin();
-    exit(0);
-}
 
 void regras(){
     char a;
@@ -767,12 +753,14 @@ void regras(){
         printw("--> Para isso, voce deve usar as setas do teclado para se movimentar e coletar os ingredientes.\n");
         printw("--> Cada pedido vale 10 pontos, sendo 8 pedidos o maximo.\n");
         printw("--> Voce pode errar 3 pedidos e usar a lixeira 5 vezes.\n");
+		printw("--> Para melhor jogabilidade, recomendamos usar o terminal no modo tela cheia.\n\n");
         printw("--> Aperte espaco para continuar.\n");
         printw("--> Aperte f1 para sair.\n");
         printw("-----------------------------------------------------------------------------------------------\n");
         a = getch();
     }
 }
+
 
 void animacao_inicio(){
     //printw(" \n");refresh(); usleep(150000);                                                                                                                                                                                                                                                                                                                                                                                                         
@@ -802,4 +790,42 @@ void animacao_inicio(){
 
     usleep(2000000);
 	clear();
+}
+
+void game_over(){
+    clear();
+	printw(" _______  _______  __   __  _______        _______  __   __  _______  ______      ___      ____  \n");
+	printw("|       ||   _   ||  |_|  ||       |      |       ||  | |  ||       ||    _ |    |   |    |    | \n");
+	printw("|    ___||  |_|  ||       ||    ___|      |   _   ||  |_|  ||    ___||   | ||    |___|   |    _| \n");
+	printw("|   | __ |       ||       ||   |___       |  | |  ||       ||   |___ |   |_||_    ___    |   |   \n");
+	printw("|   ||  ||       ||       ||    ___|      |  |_|  ||       ||    ___||    __  |  |   |   |   |   \n");
+	printw("|   |_| ||   _   || ||_|| ||   |___       |       | |     | |   |___ |   |  | |  |___|   |   |_  \n");
+	printw("|_______||__| |__||_|   |_||_______|      |_______|  |___|  |_______||___|  |_|           |____| \n\n");
+    printw("                          Pressione qualquer tecla para sair");
+    getch();
+    endwin();
+    exit(0);
+}
+
+void game_won(){
+	clear();
+	printw(" __   __  _______  _______  _______    _______  _______  __    _  __   __  _______  __   __  __       ___   ____   \n");
+	printw("|  | |  ||       ||       ||       |  |       ||   _   ||  |  | ||  | |  ||       ||  | |  ||  |     |   | |    |  \n");
+	printw("|  |_|  ||   _   ||       ||    ___|  |    ___||  |_|  ||   |_| ||  |_|  ||   _   ||  | |  ||  |     |___| |_    | \n");
+	printw("|       ||  | |  ||       ||   |___   |   | __ |       ||       ||       ||  | |  ||  |_|  ||  |      ___    |   | \n");
+	printw("|       ||  |_|  ||      _||    ___|  |   ||  ||       ||  _    ||       ||  |_|  ||       ||__|     |   |   |   | \n");
+	printw(" |     | |       ||     |_ |   |___   |   |_| ||   _   || | |   ||   _   ||       ||       | __      |___|  _|   | \n");
+	printw("  |___|  |_______||_______||_______|  |_______||__| |__||_|  |__||__| |__||_______||_______||__|           |____|  \n\n");
+	printw("                                   Pressione qualquer tecla para sair");
+    getch();
+    endwin();
+    exit(0);
+}
+
+int verifica_terminal(void){
+	int lin, col;
+	getmaxyx(stdscr, lin, col);
+	if(lin < 30 || col < 200)
+		return 0;
+	return 1;
 }

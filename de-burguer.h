@@ -88,8 +88,12 @@ void pontuacao(int* pontos);
 
 void imprime_tela(char* cardapio[], struct fila_clientes* fila, struct locais* elementos_mapa, struct pilha* refeicao, int* pontos);
 
-void game_over();
-
 void regras();
 
 void animacao_inicio();
+
+void game_over();
+
+void game_won();
+
+int verifica_terminal(void);
