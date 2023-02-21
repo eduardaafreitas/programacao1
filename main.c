@@ -53,7 +53,7 @@ int main(){
 		imprime_tela(cardapio, fila, &elementos_mapa, refeicao, &pontos);
 
 		if ((pedidos_errados == 3) || (uso_lixeira == 5)){ //checa se eh game over
-				//game_over();
+				game_over();
 		}
 		
 		if ((num_clientes < 7) && (rand()%9 == 1)){	//randomiza quando um novo cliente chegará 

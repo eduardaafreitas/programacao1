@@ -5,24 +5,17 @@
 
 //esse arquivo possui as funcoes que ainda estao sendo escritas!
 
-// animacao inicial.
+// animacao inicial. ok
 
+//regras ok
 
-void regras(){
-    char a;
-    a = '.';
-    while (a != ' '){
-        printw("Bem vindo ao jogo De-Burguer!\n");
-        printw("-> O objetivo do jogo eh fazer o maior numero de pedidos possivel sem errar.\n");
-        printw("-> Para isso, voce deve usar as setas do teclado para se movimentar e coletar os ingredientes.\n");
-        printw("-> Cada pedido vale 10 pontos, sendo 8 pedidos o maximo.\n");
-        printw("-> Voce pode errar 3 pedidos e usar a lixeira 5 vezes.\n");
-        printw("-> Aperte espaco para continuar.\n");
-        printw("-> Aperte f1 para sair.\n");
-        a = getch();
-    }
-}
+// gameover em dev
 
 void game_over(){
-	
+    clear();
+    mvprintw(0, 14, "GAME OVER");
+    mvprintw(1, 14, "Pressione qualquer tecla para sair");
+    getch();
+    endwin();
+    exit(0);
 }

@@ -743,7 +743,20 @@ void imprime_tela(char* cardapio[], struct fila_clientes* fila, struct locais* e
 	refresh();
 }
 
-
+void game_over(){
+    clear();
+	printw(" _______  _______  __   __  _______        _______  __   __  _______  ______      ___      ____  \n");
+	printw("|       ||   _   ||  |_|  ||       |      |       ||  | |  ||       ||    _ |    |   |    |    | \n");
+	printw("|    ___||  |_|  ||       ||    ___|      |   _   ||  |_|  ||    ___||   | ||    |___|   |    _| \n");
+	printw("|   | __ |       ||       ||   |___       |  | |  ||       ||   |___ |   |_||_    ___    |   |   \n");
+	printw("|   ||  ||       ||       ||    ___|      |  |_|  ||       ||    ___||    __  |  |   |   |   |   \n");
+	printw("|   |_| ||   _   || ||_|| ||   |___       |       | |     | |   |___ |   |  | |  |___|   |   |_  \n");
+	printw("|_______||__| |__||_|   |_||_______|      |_______|  |___|  |_______||___|  |_|           |____| \n\n");
+    printw("                          Pressione qualquer tecla para sair");
+    getch();
+    endwin();
+    exit(0);
+}
 
 void regras(){
     char a;
