@@ -12,13 +12,15 @@ void inicializa_ncurses(){
     curs_set(FALSE);      //não mostra o cursor na tela 
     keypad(stdscr, TRUE); //habilita leitura de setas 
 	start_color();		  //habilita cores
-	init_pair(1, COLOR_RED, COLOR_BLACK);
-	init_pair(2, COLOR_GREEN, COLOR_BLACK);
-	init_pair(3, COLOR_YELLOW, COLOR_BLACK);
-	init_pair(4, COLOR_BLUE, COLOR_BLACK);
-	init_pair(5, COLOR_MAGENTA, COLOR_BLACK);
-	init_pair(6, COLOR_CYAN, COLOR_BLACK);
-	init_pair(7, COLOR_WHITE, COLOR_BLACK);
+	init_pair(1, COLOR_BLACK, COLOR_RED); //cor hamburguer
+	init_pair(2, COLOR_BLACK, COLOR_GREEN); //cor salada
+	init_pair(3, COLOR_BLACK, COLOR_YELLOW); //cor queijo
+	init_pair(4, COLOR_GREEN, COLOR_BLACK); //cor pontuacao
+	init_pair(5, COLOR_MAGENTA, COLOR_BLACK); //cor pedidos entregues
+	init_pair(6, COLOR_BLACK, COLOR_CYAN); //cor refrigerante
+	init_pair(7, COLOR_RED, COLOR_BLACK);	//cor lixeira	
+	init_pair(8, COLOR_BLACK, COLOR_WHITE); //cor pao
+	init_pair(9, COLOR_BLACK, COLOR_MAGENTA); //cor fritas
 }
 
 void inicializa_cardapio(char* cardapio[]){
@@ -43,7 +45,7 @@ void imprime_pedido(char* cardapio[], struct fila_clientes* fila){
 	//imprime os primeiros 5 pedidos da fila 
 	struct pedido* aux = fila->comeco;
 	int col = 50, cont = 1, pedido, lin = 1;
-
+	//struct ingredientes* auxIngredientes = refeicao->topo;
 	mvprintw(0, 50, "Pedidos na fila:");
 
 	while ((cont <= 5) && (aux != NULL)){
@@ -52,32 +54,32 @@ void imprime_pedido(char* cardapio[], struct fila_clientes* fila){
 		switch(pedido){
 			case 0:{
 				for(int i = 0; i <= strlen(cardapio[aux->num_refeicao]) - 1; i++, col += 4)
-					mvprintw(lin, col, "[%c] ", cardapio[0][i]);
+					imprime_cores(cardapio[0][i], lin, col);
 			} break;
 
 			case 1:{
 				for(int i = 0; i <= strlen(cardapio[aux->num_refeicao]) - 1; i++, col += 4)
-					mvprintw(lin, col, "[%c] ", cardapio[1][i]);
+					imprime_cores(cardapio[1][i], lin, col);
 			} break;
 
 			case 2:{
 				for(int i = 0; i <= strlen(cardapio[aux->num_refeicao]) - 1; i++, col += 4)
-					mvprintw(lin, col, "[%c] ", cardapio[2][i]);
+					imprime_cores(cardapio[2][i], lin, col);
 			} break;
 			
 			case 3:{
 				for(int i = 0; i <= strlen(cardapio[aux->num_refeicao]) - 1; i++, col += 4)
-					mvprintw(lin, col, "[%c] ", cardapio[3][i]);
+					imprime_cores(cardapio[3][i], lin, col);
 			} break;
 
 			case 4:{
 				for(int i = 0; i <= strlen(cardapio[aux->num_refeicao]) - 1; i++, col += 4)
-					mvprintw(lin, col, "[%c] ", cardapio[4][i]);
+					imprime_cores(cardapio[4][i], lin, col);
 			} break;
 			
 			case 5:{
 				for(int i = 0; i <= strlen(cardapio[aux->num_refeicao]) - 1; i++, col += 4)
-					mvprintw(lin, col, "[%c] ", cardapio[5][i]);
+					imprime_cores(cardapio[5][i], lin, col);
 			} break;
 		}
 
@@ -197,15 +199,96 @@ void destroi_refeicao(struct pilha* refeicao){
 		pop(refeicao);
 }
 
+
+void imprime_cores(char ingre, int lin, int col){
+
+	switch (ingre){
+		case 'H':
+			attron(COLOR_PAIR(1));
+			mvprintw(lin, col, "[%c]", ingre);
+			break;
+		case 'P':
+			attron(COLOR_PAIR(8));
+			mvprintw(lin, col, "[%c]", ingre);
+			break;
+		case 'p':
+			attron(COLOR_PAIR(8));
+			mvprintw(lin, col, "[%c]", ingre);
+			break;
+		case 'Q':
+			attron(COLOR_PAIR(3));
+			mvprintw(lin, col, "[%c]", ingre);
+			break;
+		case 'S':
+			attron(COLOR_PAIR(2));
+			mvprintw(lin, col, "[%c]", ingre);
+			break;
+		case 'F':
+			attron(COLOR_PAIR(9));
+			mvprintw(lin, col, "[%c]", ingre);
+			break;
+		case 'R':
+			attron(COLOR_PAIR(6));
+			mvprintw(lin, col, "[%c]", ingre);
+			break;
+	}
+	attroff(COLOR_PAIR(1));
+	attroff(COLOR_PAIR(2));
+	attroff(COLOR_PAIR(3));
+	attroff(COLOR_PAIR(8));
+	attroff(COLOR_PAIR(9));
+	attroff(COLOR_PAIR(6));
+}
+
+
+
+
 void imprime_refeicao(struct pilha* refeicao){
 	struct ingredientes* aux = refeicao->topo;
 	int i = 1;
 
 	mvprintw(0, 28, "Seu preparo atual:");
+
 	while (aux != NULL){
-		mvprintw(i, 32, "[%c] ", aux->ingrediente);
+		switch (aux->ingrediente){
+			case 'H':
+				attron(COLOR_PAIR(1));
+				mvprintw(i, 32, "[%c]", aux->ingrediente);
+				break;
+			case 'P':
+				attron(COLOR_PAIR(8));
+				mvprintw(i, 32, "[%c]", aux->ingrediente);
+				break;
+			case 'p':
+				attron(COLOR_PAIR(8));
+				mvprintw(i, 32, "[%c]", aux->ingrediente);
+				break;
+			case 'Q':
+				attron(COLOR_PAIR(3));
+				mvprintw(i, 32, "[%c]", aux->ingrediente);
+				break;
+			case 'S':
+				attron(COLOR_PAIR(2));
+				mvprintw(i, 32, "[%c]", aux->ingrediente);
+				break;
+			case 'F':
+				attron(COLOR_PAIR(9));
+				mvprintw(i, 32, "[%c]", aux->ingrediente);
+				break;
+			case 'R':
+				attron(COLOR_PAIR(6));
+				mvprintw(i, 32, "[%c]", aux->ingrediente);
+				break;
+		}
+		mvprintw(i, 32, "[%c]", aux->ingrediente);
 		i++;
 		aux = aux->anterior;
+		attroff(COLOR_PAIR(1));
+		attroff(COLOR_PAIR(2));
+		attroff(COLOR_PAIR(3));
+		attroff(COLOR_PAIR(8));
+		attroff(COLOR_PAIR(9));
+		attroff(COLOR_PAIR(6));
 	}
 
 	free(aux);
@@ -578,7 +661,9 @@ void inicializa_elem_mapa(struct locais* elementos_mapa){
 }
 
 void pontuacao(int* pontos){
+	attron(COLOR_PAIR(4));
     mvprintw(10, 0, "PONTOS: %d", (*pontos));
+	attroff(COLOR_PAIR(4));
 }
 
 void imprime_tela(char* cardapio[], struct fila_clientes* fila, struct locais* elementos_mapa, struct pilha* refeicao, int* pontos){
@@ -615,15 +700,42 @@ void imprime_tela(char* cardapio[], struct fila_clientes* fila, struct locais* e
 	}
 
 	//elementos do mapa
+	attron(COLOR_PAIR(7));
 	mvprintw(5, 25, "o");
+	attron(COLOR_PAIR(5));
 	mvprintw(0, 13, "@");
+
 	mvprintw(elementos_mapa->chapeiro.lin, elementos_mapa->chapeiro.col, "&");
+	attron(COLOR_PAIR(1));
 	mvprintw(7, 7, "[H]");
+
+	attron(COLOR_PAIR(9));
 	mvprintw(4, 2, "[F]");
+
+	attron(COLOR_PAIR(8));
 	mvprintw(7, 22, "[P]");
+
+	attron(COLOR_PAIR(8));
 	mvprintw(7, 2, "[p]");
+
+	attron(COLOR_PAIR(3));
 	mvprintw(7, 12, "[Q]");
+
+	attron(COLOR_PAIR(2));
 	mvprintw(7, 17, "[S]");
+
+	attron(COLOR_PAIR(6));
 	mvprintw(2, 2, "[R]");
+
+	attroff(COLOR_PAIR(1));
+	attroff(COLOR_PAIR(2));
+	attroff(COLOR_PAIR(3));
+	attroff(COLOR_PAIR(4));
+	attroff(COLOR_PAIR(5));
+	attroff(COLOR_PAIR(6));
+	attroff(COLOR_PAIR(7));
+	attroff(COLOR_PAIR(8));
+	attroff(COLOR_PAIR(9));
+
 	refresh();
 }

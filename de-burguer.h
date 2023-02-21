@@ -68,6 +68,8 @@ void pop(struct pilha* refeicao);
 
 void destroi_refeicao(struct pilha* refeicao);
 
+void imprime_cores(char ingre, int lin, int col);
+
 void imprime_refeicao(struct pilha* refeicao);
 
 int verifica_direita(struct pilha* refeicao, struct fila_clientes* fila, int* pontos, int* pedidos_errados, int* uso_lixeira, struct locais elementos_mapa, char* cardapio[]);
