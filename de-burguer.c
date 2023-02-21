@@ -2,7 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ncurses.h>
+#include <unistd.h>
 #include "de-burguer.h"
+
 
 void inicializa_ncurses(){
     initscr();            //inicializa a tela
@@ -16,7 +18,7 @@ void inicializa_ncurses(){
 	init_pair(2, COLOR_BLACK, COLOR_GREEN); //cor salada
 	init_pair(3, COLOR_BLACK, COLOR_YELLOW); //cor queijo
 	init_pair(4, COLOR_GREEN, COLOR_BLACK); //cor pontuacao
-	init_pair(5, COLOR_MAGENTA, COLOR_BLACK); //cor pedidos entregues
+	init_pair(5, COLOR_WHITE, COLOR_MAGENTA); //cor pedidos entregues
 	init_pair(6, COLOR_BLACK, COLOR_CYAN); //cor refrigerante
 	init_pair(7, COLOR_RED, COLOR_BLACK);	//cor lixeira	
 	init_pair(8, COLOR_BLACK, COLOR_WHITE); //cor pao
@@ -576,7 +578,7 @@ void inicializa_elem_mapa(struct locais* elementos_mapa){
 	//ponto de entrega
 	elementos_mapa->entrega.simbolo = '@';
 	elementos_mapa->entrega.lin = 0;
-	elementos_mapa->entrega.col = 13;
+	elementos_mapa->entrega.col = 14;
 
 	//chapeiro
 	elementos_mapa->chapeiro.simbolo = '&';
@@ -704,7 +706,8 @@ void imprime_tela(char* cardapio[], struct fila_clientes* fila, struct locais* e
 	attron(COLOR_PAIR(7));
 	mvprintw(5, 25, "o");
 	attron(COLOR_PAIR(5));
-	mvprintw(0, 13, "@");
+	mvprintw(0, 13, " @ ");
+	attroff(COLOR_PAIR(5));
 
 	mvprintw(elementos_mapa->chapeiro.lin, elementos_mapa->chapeiro.col, "&");
 	attron(COLOR_PAIR(1));
@@ -732,11 +735,58 @@ void imprime_tela(char* cardapio[], struct fila_clientes* fila, struct locais* e
 	attroff(COLOR_PAIR(2));
 	attroff(COLOR_PAIR(3));
 	attroff(COLOR_PAIR(4));
-	attroff(COLOR_PAIR(5));
 	attroff(COLOR_PAIR(6));
 	attroff(COLOR_PAIR(7));
 	attroff(COLOR_PAIR(8));
 	attroff(COLOR_PAIR(9));
 
 	refresh();
+}
+
+
+
+void regras(){
+    char a;
+    a = '.';
+    while (a != ' '){
+        printw("-------------------------------- Bem vindo ao jogo De-Burguer! --------------------------------\n");
+        printw("--> O objetivo do jogo eh fazer o maior numero de pedidos possivel sem errar.\n");
+        printw("--> Para isso, voce deve usar as setas do teclado para se movimentar e coletar os ingredientes.\n");
+        printw("--> Cada pedido vale 10 pontos, sendo 8 pedidos o maximo.\n");
+        printw("--> Voce pode errar 3 pedidos e usar a lixeira 5 vezes.\n");
+        printw("--> Aperte espaco para continuar.\n");
+        printw("--> Aperte f1 para sair.\n");
+        printw("-----------------------------------------------------------------------------------------------\n");
+        a = getch();
+    }
+}
+
+void animacao_inicio(){
+    //printw(" \n");refresh(); usleep(150000);                                                                                                                                                                                                                                                                                                                                                                                                         
+	printw("DDDDDDDDDDDDD                                                       BBBBBBBBBBBBBBBBB                                                                                                                      \n");refresh(); usleep(150000);
+	printw("D::::::::::::DDD                                                    B::::::::::::::::B                                                                                                                     \n");refresh(); usleep(150000);
+	printw("D:::::::::::::::DD                                                  B::::::BBBBBB:::::B                                                                                                                    \n");refresh(); usleep(150000);
+	printw("DDD:::::DDDDD:::::D                                                 BB:::::B     B:::::B                                                                                                                   \n");refresh(); usleep(150000);
+	printw("  D:::::D    D:::::D     eeeeeeeeeeee                                 B::::B     B:::::Buuuuuu    uuuuuu rrrrr   rrrrrrrrr      ggggggggg   ggggguuuuuu    uuuuuu      eeeeeeeeeeee    rrrrr   rrrrrrrrr   \n");refresh(); usleep(150000);
+	printw("  D:::::D     D:::::D  ee::::::::::::ee                               B::::B     B:::::Bu::::u    u::::u r::::rrr:::::::::r    g:::::::::ggg::::gu::::u    u::::u    ee::::::::::::ee  r::::rrr:::::::::r  \n");refresh(); usleep(150000);
+	printw("  D:::::D     D:::::D e::::::eeeee:::::ee                             B::::BBBBBB:::::B u::::u    u::::u r:::::::::::::::::r  g:::::::::::::::::gu::::u    u::::u   e::::::eeeee:::::eer:::::::::::::::::r \n");refresh(); usleep(150000);
+	printw("  D:::::D     D:::::De::::::e     e:::::e      ---------------        B:::::::::::::BB  u::::u    u::::u rr::::::rrrrr::::::rg::::::ggggg::::::ggu::::u    u::::u  e::::::e     e:::::err::::::rrrrr::::::r\n");refresh(); usleep(150000);
+	printw("  D:::::D     D:::::De:::::::eeeee::::::e      -:::::::::::::-        B::::BBBBBB:::::B u::::u    u::::u  r:::::r     r:::::rg:::::g     g:::::g u::::u    u::::u  e:::::::eeeee::::::e r:::::r     r:::::r\n");refresh(); usleep(150000);
+	printw("  D:::::D     D:::::De:::::::::::::::::e       ---------------        B::::B     B:::::Bu::::u    u::::u  r:::::r     rrrrrrrg:::::g     g:::::g u::::u    u::::u  e:::::::::::::::::e  r:::::r     rrrrrrr\n");refresh(); usleep(150000);
+	printw("  D:::::D     D:::::De::::::eeeeeeeeeee                               B::::B     B:::::Bu::::u    u::::u  r:::::r            g:::::g     g:::::g u::::u    u::::u  e::::::eeeeeeeeeee   r:::::r            \n");refresh(); usleep(150000);
+	printw("  D:::::D    D:::::D e:::::::e                                        B::::B     B:::::Bu:::::uuuu:::::u  r:::::r            g::::::g    g:::::g u:::::uuuu:::::u  e:::::::e            r:::::r            \n");refresh(); usleep(150000);
+	printw("DDD:::::DDDDD:::::D  e::::::::e                                     BB:::::BBBBBB::::::Bu:::::::::::::::uur:::::r            g:::::::ggggg:::::g u:::::::::::::::uue::::::::e           r:::::r            \n");refresh(); usleep(150000);
+	printw("D:::::::::::::::DD    e::::::::eeeeeeee                             B:::::::::::::::::B  u:::::::::::::::ur:::::r             g::::::::::::::::g  u:::::::::::::::u e::::::::eeeeeeee   r:::::r            \n");refresh(); usleep(150000);
+	printw("D::::::::::::DDD       ee:::::::::::::e                             B::::::::::::::::B    uu::::::::uu:::ur:::::r              gg::::::::::::::g   uu::::::::uu:::u  ee:::::::::::::e   r:::::r            \n");refresh(); usleep(150000);
+	printw("DDDDDDDDDDDDD            eeeeeeeeeeeeee                             BBBBBBBBBBBBBBBBB       uuuuuuuu  uuuurrrrrrr                gggggggg::::::g     uuuuuuuu  uuuu    eeeeeeeeeeeeee   rrrrrrr            \n");refresh(); usleep(150000);
+	printw("                                                                                                                                         g:::::g                                                           \n");refresh(); usleep(150000);
+	printw("                                                                                                                             gggggg      g:::::g                                                           \n");refresh(); usleep(150000);
+	printw("                                                                                                                             g:::::gg   gg:::::g                                                           \n");refresh(); usleep(150000);
+	printw("                                                                                                                              g::::::ggg:::::::g                                                           \n");refresh(); usleep(150000);
+	printw("                                                                                                                               gg:::::::::::::g                                                            \n");refresh(); usleep(150000);
+	printw("                                                                                                                                 ggg::::::ggg                                                              \n");refresh(); usleep(150000);
+	printw("                                                                                                                                    gggggg                                                                 \n");refresh(); usleep(150000);
+
+    usleep(2000000);
+	clear();
 }

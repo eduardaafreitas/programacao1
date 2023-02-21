@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ncurses.h>
+#include <unistd.h>
 #include "de-burguer.h"
 
 int main(){
@@ -13,6 +14,9 @@ int main(){
 	inicializa_elem_mapa(&elementos_mapa);
 	imprime_tela(cardapio, fila, &elementos_mapa, refeicao, &pontos);
 	inicializa_ncurses();
+	animacao_inicio();
+	regras();
+	clear();
 	int movimento = getch();
 
 	while ((pontos < 70) && (movimento != KEY_F(1))){ //cada pedido vale 10 pontos, sendo 7 pedidos (num_clientes) o maximo

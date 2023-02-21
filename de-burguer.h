@@ -5,6 +5,8 @@
 #define Vegetariano 4
 #define Vegano 5
 
+
+
 struct estacao{
 	char simbolo[3];
 	int lin, col[3];
@@ -85,3 +87,7 @@ void inicializa_elem_mapa(struct locais* elementos_mapa);
 void pontuacao(int* pontos);
 
 void imprime_tela(char* cardapio[], struct fila_clientes* fila, struct locais* elementos_mapa, struct pilha* refeicao, int* pontos);
+
+void regras();
+
+void animacao_inicio();
