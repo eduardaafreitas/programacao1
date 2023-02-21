@@ -110,10 +110,11 @@ int verifica_pedido(char* cardapio[], struct fila_clientes* fila, struct pilha* 
 }
 
 struct pedido* cria_pedido(int* num_clientes){
+	(*num_clientes)++;
 	struct pedido* novo = malloc(sizeof(struct pedido));
 	novo->prox = NULL;
 	novo->anterior = NULL;
-	novo->cliente = (*num_clientes++);
+	novo->cliente = (*num_clientes);
 	novo->num_refeicao = rand()%6;
 
 	return novo;

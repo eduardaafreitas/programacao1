@@ -15,7 +15,7 @@ int main(){
 	inicializa_ncurses();
 	int movimento = getch();
 
-	while ((pontos <= 80) && (movimento != KEY_F(1))){ //cada pedido vale 10 pontos, sendo 8 pedidos (num_clientes) o maximo
+	while ((pontos < 70) && (movimento != KEY_F(1))){ //cada pedido vale 10 pontos, sendo 7 pedidos (num_clientes) o maximo
 		switch (movimento){
 			case KEY_RIGHT:{
 				if (verifica_direita(refeicao, fila, &pontos, &pedidos_errados, &uso_lixeira, elementos_mapa, cardapio) == 0){
@@ -52,9 +52,8 @@ int main(){
 				//game_over();
 		}
 		
-		if ((num_clientes < 8) && (rand()%7 == 1)){	//randomiza quando um novo cliente chegará 
+		if ((num_clientes < 7) && (rand()%9 == 1)){	//randomiza quando um novo cliente chegará 
 				insere_fim(fila, &num_clientes);
-				num_clientes++;
 		}
 		movimento = getch();
 	}
