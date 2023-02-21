@@ -46,7 +46,7 @@ void imprime_pedido(char* cardapio[], struct fila_clientes* fila){
 
 	mvprintw(0, 50, "Pedidos na fila:");
 
-	while (cont <= 5){
+	while ((cont <= 5) && (aux != NULL)){
 		pedido = aux->num_refeicao;
 
 		switch(pedido){
@@ -84,8 +84,7 @@ void imprime_pedido(char* cardapio[], struct fila_clientes* fila){
 		lin ++;
 		cont++;
 		col = 50;
-		if (aux->prox != NULL)
-			aux = aux->prox;
+		aux = aux->prox;
 	}
 }
 
