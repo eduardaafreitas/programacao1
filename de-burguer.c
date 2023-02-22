@@ -35,12 +35,12 @@ void inicializa_cardapio(char* cardapio[]){
 	cardapio[Vegano] = malloc(sizeof(char)*3);
 
 	//atribui as receitas
-	cardapio[X_Burguer] = "pHQP";
-	cardapio[X_Salada] = "pHSP";
-	cardapio[Combo_1] = "pHQPFR";
-	cardapio[Combo_2] = "pHSPFR";
-	cardapio[Vegetariano] = "pQPFR";
-	cardapio[Vegano] = "SFR";
+	cardapio[X_Burguer] = "PQHp";
+	cardapio[X_Salada] = "PSHp";
+	cardapio[Combo_1] = "RFPQHp";
+	cardapio[Combo_2] = "RFPSHp";
+	cardapio[Vegetariano] = "RFPQp";
+	cardapio[Vegano] = "RFS";
 }
 
 void imprime_pedido(char* cardapio[], struct fila_clientes* fila){
@@ -670,8 +670,9 @@ void inicializa_elem_mapa(struct locais* elementos_mapa){
 
 void pontuacao(int* pontos){
 	attron(COLOR_PAIR(4));
-    mvprintw(10, 0, "PONTOS: %d", (*pontos));
+	mvprintw(10, 0, "PONTOS: %d", (*pontos));
 	attroff(COLOR_PAIR(4));
+	mvprintw(11, 0, "Aperte f1 para sair.");
 }
 
 void imprime_tela(char* cardapio[], struct fila_clientes* fila, struct locais* elementos_mapa, struct pilha* refeicao, int* pontos){
@@ -754,9 +755,8 @@ void regras(){
         printw("--> Para isso, voce deve usar as setas do teclado para se movimentar e coletar os ingredientes.\n");
         printw("--> Cada pedido vale 10 pontos, sendo 8 pedidos o maximo.\n");
         printw("--> Voce pode errar 3 pedidos e usar a lixeira 5 vezes.\n");
-		printw("--> Para melhor jogabilidade, recomendamos usar o terminal no modo tela cheia.\n\n");
+	printw("--> Para melhor jogabilidade, recomendamos usar o terminal no modo tela cheia.\n\n");
         printw("--> Aperte espaco para continuar.\n");
-        printw("--> Aperte f1 para sair.\n");
         printw("-----------------------------------------------------------------------------------------------\n");
         a = getch();
     }
@@ -831,10 +831,15 @@ int verifica_terminal(void){
 	return 1;
 }
 
-void free_ponteiros(char* cardapio[], struct pilha* refeicao, struct fila_clientes* fila){
-	for(int i = 0; i < 6; i++)
-		free(cardapio[i]);
-	
+void free_ponteiros(struct pilha* refeicao, struct fila_clientes* fila){
+	if ((refeicao->topo != NULL) || (fila->comeco != NULL)){
+		destroi_refeicao(refeicao);
+
+		while (fila->comeco != NULL){
+			retira_comeco(fila);
+		}
+	}
+
 	free(refeicao);
 	free(fila);
 }

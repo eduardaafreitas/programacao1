@@ -98,4 +98,4 @@ void game_won();
 
 int verifica_terminal(void);
 
-void free_ponteiros(char* cardapio[], struct pilha* refeicao, struct fila_clientes* fila);
+void free_ponteiros(struct pilha* refeicao, struct fila_clientes* fila);

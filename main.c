@@ -73,7 +73,7 @@ int main(){
 		movimento = getch();
 	}
 
-	free_ponteiros(cardapio, refeicao, fila);
+	free_ponteiros(refeicao, fila);
 	endwin();
 	return 0;
 }
