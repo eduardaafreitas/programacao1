@@ -55,27 +55,27 @@ void imprime_pedido(char* cardapio[], struct fila_clientes* fila){
 
 		switch(pedido){
 			case 0:{
-				for(int i = 0; i <= strlen(cardapio[aux->num_refeicao]) - 1; i++, col += 4)
+				for(int i = 0; i <= strlen(cardapio[aux->num_refeicao]) - 1; i++, lin++)
 					imprime_cores(cardapio[0][i], lin, col);
 			} break;
 
 			case 1:{
-				for(int i = 0; i <= strlen(cardapio[aux->num_refeicao]) - 1; i++, col += 4)
+				for(int i = 0; i <= strlen(cardapio[aux->num_refeicao]) - 1; i++, lin++)
 					imprime_cores(cardapio[1][i], lin, col);
 			} break;
 
 			case 2:{
-				for(int i = 0; i <= strlen(cardapio[aux->num_refeicao]) - 1; i++, col += 4)
+				for(int i = 0; i <= strlen(cardapio[aux->num_refeicao]) - 1; i++, lin++)
 					imprime_cores(cardapio[2][i], lin, col);
 			} break;
 			
 			case 3:{
-				for(int i = 0; i <= strlen(cardapio[aux->num_refeicao]) - 1; i++, col += 4)
+				for(int i = 0; i <= strlen(cardapio[aux->num_refeicao]) - 1; i++, lin++)
 					imprime_cores(cardapio[3][i], lin, col);
 			} break;
 
 			case 4:{
-				for(int i = 0; i <= strlen(cardapio[aux->num_refeicao]) - 1; i++, col += 4)
+				for(int i = 0; i <= strlen(cardapio[aux->num_refeicao]) - 1; i++, lin++)
 					imprime_cores(cardapio[4][i], lin, col);
 			} break;
 			
@@ -85,9 +85,9 @@ void imprime_pedido(char* cardapio[], struct fila_clientes* fila){
 			} break;
 		}
 
-		lin ++;
+		lin = 1;
 		cont++;
-		col = 50;
+		col += 4;
 		aux = aux->prox;
 	}
 }
@@ -162,9 +162,14 @@ struct fila_clientes* inicializa_fila(int* num_clientes){
 void retira_comeco(struct fila_clientes* fila){
 	struct pedido* aux = fila->comeco;
 
-	fila->comeco = aux->prox;
-	aux->prox->anterior = NULL;
-	aux->prox = NULL;
+	if (aux->prox != NULL){
+		fila->comeco = aux->prox;
+		aux->prox->anterior = NULL;
+		aux->prox = NULL;
+	} else {
+		fila->comeco = NULL;
+		fila->fim = NULL;
+	}
 
 	free(aux);
 }
