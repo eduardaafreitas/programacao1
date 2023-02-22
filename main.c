@@ -5,7 +5,7 @@
 #include "de-burguer.h"
 
 int main(){
-	int pontos = 0, pedidos_errados = 0, uso_lixeira = 0, num_clientes = 0; int tam_terminal = 0;
+	int pontos = 0, pedidos_errados = 0, uso_lixeira = 0, num_clientes = 0;
 	struct locais elementos_mapa;
 	char* cardapio[6];
 	inicializa_cardapio(cardapio);
@@ -14,12 +14,6 @@ int main(){
 	inicializa_elem_mapa(&elementos_mapa);
 	imprime_tela(cardapio, fila, &elementos_mapa, refeicao, &pontos);
 	inicializa_ncurses();
-	tam_terminal = verifica_terminal();
-	if(tam_terminal == 0){
-    	endwin();
-    	printf("Tamanho do terminal insuficiente, tente novamente em modo tela cheia.\n");
-    	exit(0);
-    }
 	animacao_inicio();
 	regras();
 	clear();
