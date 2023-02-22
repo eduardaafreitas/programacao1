@@ -676,11 +676,7 @@ void pontuacao(int* pontos){
 
 void imprime_tela(char* cardapio[], struct fila_clientes* fila, struct locais* elementos_mapa, struct pilha* refeicao, int* pontos){
 	//limpa tela
-	for (int i = 0; i < 80; i++){
-		for (int j = 0; j < 80; j++){
-			mvprintw(i, j, " ");
-		}
-	}
+	clear();
 
 	imprime_refeicao(refeicao);
 	pontuacao(pontos);
