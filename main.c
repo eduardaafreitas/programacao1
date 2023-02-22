@@ -61,7 +61,7 @@ int main(){
 		if ((pedidos_errados == 3) || (uso_lixeira == 5)){ //checa se eh game over
 				game_over();
 		}
-		else{
+		else {
 			if (pontos >= 70){ //checa se eh game won
 				game_won();
 			}
@@ -72,7 +72,8 @@ int main(){
 		}
 		movimento = getch();
 	}
-	//game_won();
+
+	free_ponteiros(cardapio, refeicao, fila);
 	endwin();
 	return 0;
 }

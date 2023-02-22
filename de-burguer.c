@@ -80,7 +80,7 @@ void imprime_pedido(char* cardapio[], struct fila_clientes* fila){
 			} break;
 			
 			case 5:{
-				for(int i = 0; i <= strlen(cardapio[aux->num_refeicao]) - 1; i++, col += 4)
+				for(int i = 0; i <= strlen(cardapio[aux->num_refeicao]) - 1; i++, lin++)
 					imprime_cores(cardapio[5][i], lin, col);
 			} break;
 		}
@@ -833,4 +833,12 @@ int verifica_terminal(void){
 	if(lin < 30 || col < 200)
 		return 0;
 	return 1;
+}
+
+void free_ponteiros(char* cardapio[], struct pilha* refeicao, struct fila_clientes* fila){
+	for(int i = 0; i < 6; i++)
+		free(cardapio[i]);
+	
+	free(refeicao);
+	free(fila);
 }
